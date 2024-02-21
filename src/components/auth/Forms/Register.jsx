@@ -7,8 +7,6 @@ export const Register = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-
-
     const registerUser = (e) => {
         e.preventDefault();
         console.log(username)

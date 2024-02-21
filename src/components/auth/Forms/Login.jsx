@@ -10,7 +10,6 @@ export const Login = (props) => {
         console.log(username)
     }
 
-
     return (
         <div>
             <form className="login-form" onSubmit={loginUser}>
