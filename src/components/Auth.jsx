@@ -12,7 +12,6 @@ const initialState = {
 
 }
 
-
 const Auth = () => {
     const [form, setForm] = useState(initialState);
     const [isLogin, setIsLogin] = useState(false);
