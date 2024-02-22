@@ -1,3 +1,14 @@
+# t3a2-frontend
+Frontend / React app portion of Part B of a Coder Academy final project, a Full Stack MERN App.
+
+This project is split over three repositories:
+
+- Frontend (this repo): [github.com/lewishardie/t3a2-frontend](https://github.com/lewishardie/t3a2-frontend)
+
+- Corresponding Backend: [github.com/lzhalloran/t3a2-backend](https://github.com/lzhalloran/t3a2-backend)
+
+- Part A (planning and designing, main README): [github.com/lzhalloran/t3a2-a-full-stack-app-part-a](https://github.com/lzhalloran/t3a2-a-full-stack-app-part-a)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
