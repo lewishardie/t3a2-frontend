@@ -1,13 +1,29 @@
 import React from 'react'
 import { useState } from 'react'
+import { useBackend } from '../../../context/BackendProvider'
 
 export const Login = (props) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const loginUser = (e) => {
+    const { postData } = useBackend();
+
+    // prevent reload
+    const loginUser = async (e) => {
         e.preventDefault();
-        console.log(username)
+        console.log(username, password)
+
+        try {
+            const userData = {
+                username,
+                password
+            }
+
+            await postData(userData);
+
+        } catch (error) {
+            console.error('Faied to register user:', error)
+        };
     }
 
     return (
@@ -16,7 +32,7 @@ export const Login = (props) => {
                 <label for="username">Username</label>
                 <input type="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
                 <label for="password">Password</label>
-                <input type="password" id="username" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <button type="submit">Log In</button>
             </form>
         </div>
