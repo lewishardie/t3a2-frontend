@@ -4,19 +4,17 @@ import { Login } from './components/_auth/forms/Login'
 import { Register } from './components/_auth/forms/Register'
 import AuthLayout from './components/_auth/AuthLayout'
 import RootLayout from './components/_root/RootLayout'
-import { Home } from './pages'
+import { Explore, Home, Settings } from './pages'
 
 
 // const authToken = false;
-
-
 
 const App = () => {
 
   // if(!authToken) return <AuthLayout />
 
   return (
-    <main className="container-fluid bg-dark">
+    <main className="min-vh-100">
         <Routes>
           {/* public routes */}
           <Route element={<AuthLayout />}>
@@ -27,6 +25,8 @@ const App = () => {
           {/* private routes */}
           <Route element={<RootLayout />}>
             <Route index element={<Home />}/>
+            <Route path="/explore" element={<Explore />}/>
+            <Route path="/settings" element={<Settings />}/>
 
           </Route>
 

@@ -10,21 +10,19 @@ import Navbar from 'react-bootstrap/Navbar'
 export default function TopNav() {
   return (
 
-    <section className="topnav">
-      <div className="flex-between py4 px-5">
+    <header>
 
-
-        <Navbar bg="dark" data-bs-theme="dark" expand="lg" className="bg-body-tertiary">
-          <Container>
-            <Navbar.Brand href="#home">
+        <Navbar bg="dark" data-bs-theme="dark" expand="sm" className="bg-body-tertiary">
+          <div class="container-fluid" >
+            <Navbar.Brand href="/">
                 <img
                   alt=""
-                  src="/img/logo.svg"
-                  width="30"
-                  height="30"
-                  className="d-inline-block align-top"
+                  src="/assets/icons/gamestart-logo.svg"
+                  width="60"
+                  height="60"
+                  className="flex-start"
                   />{' '}
-                Social Media App
+                GameStar
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -32,11 +30,16 @@ export default function TopNav() {
               <Nav className="me-auto">
                 <Nav.Link href="#home">Game1</Nav.Link>
                 <Nav.Link href="#link">Game2</Nav.Link>
+                <Nav.Link href="#link">Game2</Nav.Link>
+                <Nav.Link href="#link">Game2</Nav.Link>
+                <Nav.Link href="#link">Game2</Nav.Link>
+                <Nav.Link href="#link">Game2</Nav.Link>
+                <Nav.Link href="#link">Game2</Nav.Link>
               </Nav>
             </Navbar.Collapse>
-          </Container>
+          </div>
         </Navbar>
-      </div>
-    </section>
+      </header>
+
   );
 }
