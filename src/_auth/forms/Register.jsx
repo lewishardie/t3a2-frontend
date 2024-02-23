@@ -1,12 +1,12 @@
 
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Loader from '../../shared/Loader';
+import Loader from '../../components/shared/Loader';
 // Style
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 // Backend
-import { useBackend } from '../../../context/BackendProvider'
+import { useBackend } from '../../context/BackendProvider'
 
 
 
