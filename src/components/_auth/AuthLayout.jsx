@@ -1,7 +1,9 @@
 import { Outlet, Navigate } from 'react-router-dom'
+
+
 import React from 'react'
 
-const AuthLayout = () => {
+export default function AuthLayout() {
 
     const isAuthenticated = false;
 
@@ -23,5 +25,3 @@ const AuthLayout = () => {
         </>
     )
 }
-
-export default AuthLayout

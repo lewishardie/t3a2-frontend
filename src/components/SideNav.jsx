@@ -1,13 +1,20 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+import { Nav } from "react-bootstrap"
 
-const Sidebar = () => {
+
+export default function SideNav() {
+
   return (
-    <header className="padding-x py-8 absolute z-10 w-full">
+    <header className="">
+      <div className="row">
+
+        
+      </div>
       <nav>
-        <ul>
-          <li>
+        <ul class="nav nav-pills">
+          <li class="nav-item">
             <NavLink to ='/' style={({isActive}) => isActive ? {color: "red"} : undefined }>Home</NavLink>
           </li>
           <li>
@@ -32,4 +39,17 @@ const Sidebar = () => {
   )
 }
 
-export default Sidebar
+/*
+function StackedExample() {
+  return (
+    <Nav defaultActiveKey="/home" className="flex-column">
+      <Nav.Link href="/home">Active</Nav.Link>
+      <Nav.Link eventKey="link-1">Link</Nav.Link>
+      <Nav.Link eventKey="link-2">Link</Nav.Link>
+      <Nav.Link eventKey="disabled" disabled>
+        Disabled
+      </Nav.Link>
+    </Nav>
+  );
+}
+*/
