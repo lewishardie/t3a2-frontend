@@ -3,8 +3,8 @@ import { Routes, Route } from 'react-router-dom'
 import { Login } from './components/_auth/forms/Login'
 import { Register } from './components/_auth/forms/Register'
 import AuthLayout from './components/_auth/AuthLayout'
-import RootLayout from './components/_root/RootLayout'
-import { Explore, Home, Settings } from './pages'
+import RootLayout from './_root/RootLayout'
+import { Explore, Home, Settings } from './_root/pages'
 
 
 // const authToken = false;
@@ -14,7 +14,7 @@ const App = () => {
   // if(!authToken) return <AuthLayout />
 
   return (
-    <main className="min-vh-100">
+    <main class="">
         <Routes>
           {/* public routes */}
           <Route element={<AuthLayout />}>
