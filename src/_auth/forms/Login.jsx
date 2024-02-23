@@ -43,6 +43,10 @@ export const Login = (props) => {
 
         <div className="d-flex justify-content-center align-items-center 100-w vh-100">
             <div className="50-w p-5 rounded bg-light">
+                <div>
+                    <h2 className="font-weight-bold pt-5 pt-sm-12">Login</h2>
+                    <p>Enter your username and password</p>
+                </div>
 
                 <Form onSubmit={loginUser}>
                     <Form.Group className="mb-2" controlId="formBasicUsername">
@@ -56,11 +60,11 @@ export const Login = (props) => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" type="submit" className="container-fluid mb-2">
                     Login
                     </Button>
                     <span>
-                    <p className="mb-1">Don't have an account?</p>
+                    <p className="mb-2">Don't have an account?</p>
                     <Link to="/register">Create an Account</Link>
                     </span>
                 </Form>

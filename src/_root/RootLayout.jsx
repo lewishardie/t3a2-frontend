@@ -1,14 +1,14 @@
 import React from 'react'
-import TopNav from '../TopNav'
-import SideNav from '../SideNav'
+import TopNav from '../components/shared/TopNav'
+import SideNav from '../components/shared/SideNav'
 import { Outlet } from 'react-router'
 
 const RootLayout = () => {
   return (
-    <div className="">
+    <div className="w-100 md-flex">
         <TopNav />
         <SideNav />
-            <section className="">
+            <section className="d-flex h-100">
                 <Outlet />
             </section>
     </div>
