@@ -27,7 +27,7 @@ export function BackendProvider(props) {
 
     const postData = async (postData) => {
         try {
-            const response = await fetch(`${backendUrl}/api/send`, {
+            const response = await fetch(`${backendUrl}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
