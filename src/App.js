@@ -1,21 +1,20 @@
 import { Routes, Route } from 'react-router-dom'
 
-import { Login } from './components/_auth/Forms/Login'
-import { Register } from './components/_auth/Forms/Register'
+import { Login } from './components/_auth/forms/Login'
+import { Register } from './components/_auth/forms/Register'
 import AuthLayout from './components/_auth/AuthLayout'
+import RootLayout from './components/_root/RootLayout'
+import { Explore, Home, Settings } from './pages'
 
 
 // const authToken = false;
-
-
 
 const App = () => {
 
   // if(!authToken) return <AuthLayout />
 
   return (
-      <div className="App">
-        <h1>Gaming Social Media</h1>
+    <main className="min-vh-100">
         <Routes>
           {/* public routes */}
           <Route element={<AuthLayout />}>
@@ -24,11 +23,16 @@ const App = () => {
           </Route>
 
           {/* private routes */}
-          
+          <Route element={<RootLayout />}>
+            <Route index element={<Home />}/>
+            <Route path="/explore" element={<Explore />}/>
+            <Route path="/settings" element={<Settings />}/>
+
+          </Route>
+
 
         </Routes>
-
-      </div>
+    </main>
   );
 }
 

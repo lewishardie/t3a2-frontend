@@ -1,5 +1,10 @@
-import React from 'react'
+
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+// Style
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+// Backend
 import { useBackend } from '../../../context/BackendProvider'
 
 export const Register = (props) => {
@@ -33,19 +38,49 @@ export const Register = (props) => {
     };
 
     return (
-        <div>
-            <form className="register-form" onSubmit={registerUser}>
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} />
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button type="submit">Log In</button>
-            </form>
+
+        <div className="d-flex justify-content-center align-items-center 100-w vh-100">
+            <div className="50-w p-5 rounded bg-secondary">
+
+                <Form onSubmit={registerUser}>
+                    <Form.Group className="mb-2" controlId="formBasicName">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control type="text" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)}/>
+                        <Form.Text className="text-muted">
+                        </Form.Text>
+                    </Form.Group>
+
+                    <Form.Group className="mb-2" controlId="formBasicUsername">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control type="text" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                        <Form.Text className="text-muted">
+                        </Form.Text>
+                    </Form.Group>
+
+                    <Form.Group className="mb-2" controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Text className="text-muted">
+                        </Form.Text>
+                    </Form.Group>
+        
+                    <Form.Group className="mb-2" controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit">
+                    Submit
+                    </Button>
+
+                    <div>
+                    <p>Already have an account?</p>
+                    <Link to="/login">Login</Link>
+                    </div>
+                </Form>
+            </div>
         </div>
+
     )
 }
 
