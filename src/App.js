@@ -1,18 +1,17 @@
 import { Routes, Route } from 'react-router-dom'
 
+import { Login } from './components/_auth/Forms/Login'
+import { Register } from './components/_auth/Forms/Register'
+import AuthLayout from './components/_auth/AuthLayout'
 
-// import { Auth } from './components';
-import { Login } from './components/auth/Forms/Login'
-import { Register } from './components/auth/Forms/Register'
-import AuthLayout from './components/auth/AuthLayout'
 
-const authToken = false;
+// const authToken = false;
 
 
 
 const App = () => {
 
-  // if(!authToken) return <Auth />
+  // if(!authToken) return <AuthLayout />
 
   return (
       <div className="App">
@@ -23,6 +22,10 @@ const App = () => {
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Register />}/>
           </Route>
+
+          {/* private routes */}
+          
+
         </Routes>
 
       </div>
