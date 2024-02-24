@@ -7,78 +7,70 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 // Backend
 import { useBackend } from '../../context/BackendProvider'
+// import { registerValidation } from '../../lib/validation';
+// import { parse } from 'valibot'
 
 
-
-export const Register = (props) => {
-    // variables for user registration form
-    const [name, setName] = useState('')
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [errors, SetErrors] = useState({})
-
-    const isLoading = false;
+// form object
+export const Register = () => {
+    const [formData, setFormdata ] = useState({
+        name: '',
+        username: '',
+        email: '',
+        password: '',
+    })
+    const [isLoading, setIsLoading] = useState(false);
 
     // Access backend-related functions
     const { postData } = useBackend();
 
-    // handle submit of the form
-    const registerUser = async (e) => {
-        // prevent reload of the app
-        e.preventDefault();
-        console.log(name, username, email, password)
+    // handle on change for inputs
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormdata({ ...formData, [name]: value });
+    };
 
-        // try to send the data
+    // handle submit
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
 
         try {
-            const userData = {
-                name,
-                username,
-                email,
-                password
-            }
-
-            await postData(userData);
-
+            const response = await postData(formData);
+            console.log('Server response:', response)
+            console.log(formData)
+            // Handle success
         } catch (error) {
-            console.error('Faied to register user:', error)
-        };
+            console.error('Failed to register user:', error)
+            // Handle error
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
-        <div class="d-flex justify-content-center align-items-center 100-w vh-100">
+
+        <div className="d-flex justify-content-center align-items-center 100-w vh-100">
             
             <div className="50-w p-5 rounded bg-light">
                 <div>
                     <h2 className="font-weight-bold pt-5 pt-sm-12">Create a New Account</h2>
                     <p>To create a new account, please enter your details</p>
                 </div>
-                {/* <div className="d-flex justify-content-center align-items-center row">
-                    <img 
-                    src="/assets/icons/gamestart-logo.svg"
-                    alt=""
-                    className="img-fluid h-25 w-25"
-                    />
-                    <div>
-                        <p>Create a new account</p>
-                    </div>
-                </div> */}
                 
-
-                <Form onSubmit={registerUser}>
+                <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-2" controlId="formBasicName">
                         <Form.Label>Name</Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter your name" 
-                            value={name} 
-                            onChange={(e) => setName(e.target.value)}
+                            value={formData.name} 
+                            onChange={handleChange}
+                            name="name"
                             required
+                    
                             />
-                        <Form.Text id="nameHelpBlock" muted>
-                            Enter your first and/or last name
-                        </Form.Text>
+                            {/* {errors && errors.name && <Form.Text className="text-danger">{errors.name}</Form.Text>} */}
                     </Form.Group>
 
                     <Form.Group className="mb-2" controlId="formBasicUsername">
@@ -86,13 +78,13 @@ export const Register = (props) => {
                         <Form.Control 
                             type="text" 
                             placeholder="Enter username" 
-                            value={username} 
-                            onChange={(e) => setUsername(e.target.value)}
+                            value={formData.username} 
+                            onChange={handleChange}
+                            name="username"
                             required
+                    
                             />
-                        <Form.Text id="usernameHelpBlock" muted>
-                            Your username mustn't contain profanity blah blah
-                        </Form.Text>
+                            {/* {errors.username && <Form.Text className="text-danger">{errors.username}</Form.Text>} */}
                     </Form.Group>
 
                     <Form.Group className="mb-2" controlId="formBasicEmail">
@@ -100,13 +92,13 @@ export const Register = (props) => {
                         <Form.Control 
                             type="email" 
                             placeholder="Enter email" 
-                            value={email} 
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={formData.email} 
+                            onChange={handleChange}
+                            name="email"
                             required
-                            />
-                        <Form.Text id="emailHelpBlock" muted>
-                            Your email must be valid
-                        </Form.Text>
+
+                        />
+                            {/* {errors.email && <Form.Text className="text-danger">{errors.email}</Form.Text>}                         */}
                     </Form.Group>
         
                     <Form.Group className="mb-2" controlId="formBasicPassword">
@@ -114,13 +106,15 @@ export const Register = (props) => {
                         <Form.Control 
                             type="password" 
                             placeholder="Password" 
-                            value={password} 
-                            onChange={(e) => setPassword(e.target.value)} 
+                            value={formData.password} 
+                            onChange={handleChange}
+                            name="password"
                             required
+                            minlength={10}
+
                         />
-                        <Form.Text id="passwordHelpBlock" muted>
-                            Your password must be atleast 8 characters long
-                        </Form.Text>
+                        {/* {errors.password && <Form.Text className="text-danger">{errors.password}</Form.Text>} */}
+                        
                     </Form.Group>
 
                     <Button variant="primary" type="submit" className="container-fluid mb-2">
@@ -144,3 +138,88 @@ export const Register = (props) => {
 }
 
 export default Register
+
+
+// combined form data and valibot
+
+// export const Register = () => {
+//     const [formData, setFormdata ] = useState({
+//         name: '',
+//         username: '',
+//         email: '',
+//         password: '',
+//     })
+//     const [errors, setErrors] = useState({});
+//     const [isLoading, setIsLoading] = useState(false);
+//     const [valdated, setValidated] = useState(false)
+
+
+//     // Access postData from useBackend context
+//     const { postData } = useBackend();
+
+//     const handleChange = (e) => {
+//         const { name, value } = e.target;
+//         setFormdata({ ...formData, [name]: value });
+//     };
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         setIsLoading(true);
+
+//         const validation = parse(registerValidation, formData)
+//         if (validation.success) {
+//             try {
+//                 const response = await postData(formData);
+//                 console.log('Server response:', response)
+//                 console.log(formData)
+//                 // Handle success
+//             } catch (error) {
+//                 console.error('Failed to register user:', error)
+//                 // Handle error
+//             } finally {
+//                 setIsLoading(false);
+//             }
+//         } else {
+//             setErrors(validation.errors);
+//             setIsLoading(false);
+//         }
+//     };
+
+
+// seperate inputs and usestates
+
+// // export const Register = (props) => {
+// //     // variables for user registration form
+// //     const [name, setName] = useState('')
+// //     const [username, setUsername] = useState('')
+// //     const [email, setEmail] = useState('')
+// //     const [password, setPassword] = useState('')
+// //     // const [errors, SetErrors] = useState({})
+
+// //     
+
+// //     // Access backend-related functions
+// //     const { postData } = useBackend();
+
+// //     // handle submit of the form
+// //     const registerUser = async (e) => {
+// //         // prevent reload of the app
+// //         e.preventDefault();
+// //         console.log(name, username, email, password)
+
+// //         // try to send the data
+
+// //         try {
+// //             const userData = {
+// //                 name,
+// //                 username,
+// //                 email,
+// //                 password
+// //             }
+
+// //             await postData(userData);
+
+// //         } catch (error) {
+// //             console.error('Faied to register user:', error)
+// //         };
+// //     };
