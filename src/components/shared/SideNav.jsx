@@ -7,9 +7,9 @@ import { Nav } from "react-bootstrap"
 export default function SideNav() {
 
   return (
-      <nav class="">
-        <ul class="">
-          <li class="nav-item">
+      <nav className="">
+        <ul className="">
+          <li className="nav-item">
             <NavLink to ='/' style={({isActive}) => isActive ? {color: "red"} : undefined }>Home</NavLink>
           </li>
           <li>
