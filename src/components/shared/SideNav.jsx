@@ -1,13 +1,16 @@
-import React from 'react'
+
 import { NavLink } from 'react-router-dom'
+import { useState } from 'react'
 
 import { Nav } from "react-bootstrap"
 
 
 export default function SideNav() {
 
+  const [showSidebar, setShowSidebar] = useState(true)
+
   return (
-      <nav className="">
+      <nav className="bg-dark w-25 h-100">
         <ul className="">
           <li className="nav-item">
             <NavLink to ='/' style={({isActive}) => isActive ? {color: "red"} : undefined }>Home</NavLink>
@@ -29,6 +32,16 @@ export default function SideNav() {
           </li>
         </ul>
       </nav>
+
+    // <Nav defaultActiveKey="/home" className="flex-column bg-secondary w-25 h-100 border">
+    //   <Nav.Link href="/home">Home</Nav.Link>
+    //   <Nav.Link href="/explore">Explore</Nav.Link>
+    //   <Nav.Link href="/chats">Chats</Nav.Link>
+    //   <Nav.Link href="/friends">Friends</Nav.Link>
+    //   <Nav.Link href="/notifications">Notifications</Nav.Link>
+    //   <Nav.Link href="/settings">Settings</Nav.Link>
+    // </Nav>
+
   )
 }
 
