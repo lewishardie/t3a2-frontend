@@ -13,11 +13,11 @@ import { useBackend } from '../../context/BackendProvider'
 
 // form object
 export const Register = () => {
-    const [formData, setFormdata ] = useState({
+    const [formData, setFormData ] = useState({
         name: '',
         username: '',
         email: '',
-        password: '',
+        password: ''
     })
     const [isLoading, setIsLoading] = useState(false);
 
@@ -27,7 +27,7 @@ export const Register = () => {
     // handle on change for inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormdata({ ...formData, [name]: value });
+        setFormData({ ...formData, [name]: value });
     };
 
     // handle submit
