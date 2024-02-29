@@ -3,6 +3,10 @@
   padding: 0
 }
 
+.Container {
+  padding: 0
+}
+
 .btn-flat {
   background-colour: purple;
   color: white;

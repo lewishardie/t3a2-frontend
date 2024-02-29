@@ -17,7 +17,7 @@ export function BackendProvider(props) {
     // Define backend-related functions
     const fetchData = async () => {
         try {
-            const response = await fetch(`${backendUrl}/users/login`);
+            const response = await fetch(`${backendUrl}users/login`);
             const data = await response.json();
             setData(data);
         } catch (error) {
@@ -27,7 +27,7 @@ export function BackendProvider(props) {
 
     const postData = async (postData) => {
         try {
-            const response = await fetch(`${backendUrl}/users/register`, {
+            const response = await fetch(`${backendUrl}users/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
