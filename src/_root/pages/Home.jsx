@@ -1,7 +1,15 @@
+import { useState, useEffect } from "react"
+import { Container, Row, Col } from "react-bootstrap"
+
+
+
+
 
 export default function Home() {
   return (
-    <div>Home</div>
+      <div className="home-container">
+
+      </div>
   )
 }
 
