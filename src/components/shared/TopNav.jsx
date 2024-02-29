@@ -1,5 +1,5 @@
 
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { FiLogOut } from "react-icons/fi";
 
 import Container from 'react-bootstrap/Container'
@@ -27,23 +27,33 @@ const TopNav = () => {
         <Navbar.Toggle/>
         <Navbar.Collapse className="justify-content-end">
           <div className="d-flex gap-2 align-items-center">
-            <Link to="/friends" className="btn">
+            <NavLink 
+              to="/friends" 
+              className="btn"
+              style={({isActive}) => isActive ? {color:"white"} : undefined }
+            >
               <LiaUserFriendsSolid size={25}/>
-            </Link>
+            </NavLink>
            
             {/* Need to change link to open the side menu with notifcations panel*/}
-            <Link to="/notifications" className="btn">
-
+            <NavLink 
+              to="/notifications" 
+              className="btn"
+              style={({isActive}) => isActive ? {color:"white"} : undefined }
+            >
               <IoNotificationsOutline size={25}/>
-
-            </Link>
-            <Link to="/chats" className="btn">
+            </NavLink>
+            <NavLink 
+              to="/chats"
+              className="btn"
+              style={({isActive}) => isActive ? {color:"white"} : undefined }
+              >
               <BiMessageSquareDots size={25}/>
-            </Link>
+            </NavLink>
 
             {/* link to user profile */}
               {/* {`/profile/${user.id}` */}
-            <Link to="/settings">
+            <NavLink to="/settings">
               <Image
                 // {user.imageUrl ||}
                 src='/assets/icons/gamestart-logo.svg'
@@ -53,21 +63,19 @@ const TopNav = () => {
                 roundedCircle
                 className=""
                 />
-            </Link>
-              <Button 
-                variant="" 
-                className="" 
-                // onClick={signOut}
-                >
-                <FiLogOut 
+            </NavLink>
+            <Button 
+              variant="" 
+              className=""
+              // onClick={signOut}
+              >
+              <FiLogOut 
                 //logout button
-                />
+              />
 
-              </Button>
+            </Button>
         </div>
         </Navbar.Collapse>
-
-
       </Container>
       </Navbar>
 

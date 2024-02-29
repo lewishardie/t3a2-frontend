@@ -6,11 +6,21 @@ import RootLayout from './_root/RootLayout'
 import { Chats, Explore, Friends, Home, Notifications, Settings } from './_root/pages'
 import { Login } from './_auth/forms/Login'
 import { Register } from './_auth/forms/Register'
+import { useEffect, useState } from 'react'
 
 
 // const authToken = false;
 
 const App = () => {
+
+  let [backendUrl, setBackendUrl ] = useState("")
+
+  useEffect(() => {
+    setBackendUrl(process.env.REACT_APP_BACKEND_URL)
+  
+  }, []);
+
+
 
   // if(!authToken) return <AuthLayout />
 
@@ -34,8 +44,8 @@ const App = () => {
 
           </Route>
 
-
         </Routes>
+        <h2>sds is {backendUrl}</h2>
     </main>
   );
 }
