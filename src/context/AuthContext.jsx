@@ -32,6 +32,7 @@ export function AuthProvider({ children }) {
 
     // ensure effect only runs once
     checkAuthUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const logout = () => {
