@@ -1,20 +1,21 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+
+import { Link, NavLink } from 'react-router-dom'
 import { FiLogOut } from "react-icons/fi";
 
 import Container from 'react-bootstrap/Container'
-import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
-import { Button } from 'react-bootstrap'
+import { Button,  Image } from 'react-bootstrap'
 
-{/* <NavLink to ='/' style={({isActive}) => isActive ? {color: "red"} : undefined }>Home</NavLink> */}
+// Icon Imports
+import { IoNotificationsOutline } from "react-icons/io5";
+import { BiMessageSquareDots } from "react-icons/bi";
+import { LiaUserFriendsSolid } from "react-icons/lia";
 
-export default function TopNav() {
+
+const TopNav = () => {
   return (
-
-    <section className="topnav">
-      <div className="d-flex py-4 px-5">
+    <Navbar className="bg-secondary">
+      <Container fluid>
         <Link to="/" className="d-flex gap-3 align-items-center">
           <img
             src="/assets/icons/gamestart-logo.svg"
@@ -23,49 +24,62 @@ export default function TopNav() {
             height={50}
             />
         </Link>
-
-        <div className="d-flex gap-4">
-          <Button 
-            variant="" 
-            className="" 
-            // onClick={signOut}
+        <Navbar.Toggle/>
+        <Navbar.Collapse className="justify-content-end">
+          <div className="d-flex gap-2 align-items-center">
+            <NavLink 
+              to="/friends" 
+              className="btn"
+              style={({isActive}) => isActive ? {color:"white"} : undefined }
             >
-            <FiLogOut />
+              <LiaUserFriendsSolid size={25}/>
+            </NavLink>
+           
+            {/* Need to change link to open the side menu with notifcations panel*/}
+            <NavLink 
+              to="/notifications" 
+              className="btn"
+              style={({isActive}) => isActive ? {color:"white"} : undefined }
+            >
+              <IoNotificationsOutline size={25}/>
+            </NavLink>
+            <NavLink 
+              to="/chats"
+              className="btn"
+              style={({isActive}) => isActive ? {color:"white"} : undefined }
+              >
+              <BiMessageSquareDots size={25}/>
+            </NavLink>
 
-          </Button>
+            {/* link to user profile */}
+              {/* {`/profile/${user.id}` */}
+            <NavLink to="/settings">
+              <Image
+                // {user.imageUrl ||}
+                src='/assets/icons/gamestart-logo.svg'
+                alt="profile"
+                width={40}
+                height={40}
+                roundedCircle
+                className=""
+                />
+            </NavLink>
+            <Button 
+              variant="" 
+              className=""
+              // onClick={signOut}
+              >
+              <FiLogOut 
+                //logout button
+              />
+
+            </Button>
         </div>
-
-      </div>
-      </section>
+        </Navbar.Collapse>
+      </Container>
+      </Navbar>
 
   );
-}
-/*
-<Navbar bg="dark" data-bs-theme="dark" expand="sm" className="bg-body-tertiary">
-<div class="container-fluid" >
-  <Navbar.Brand href="/">
-      <img
-        alt=""
-        src="/assets/icons/gamestart-logo.svg"
-        width="60"
-        height="60"
-        className="flex-start"
-        />{' '}
-      GameStar
-  </Navbar.Brand>
-  <Navbar.Toggle aria-controls="basic-navbar-nav" />
-  <Navbar.Collapse id="basic-navbar-nav">
- 
-    <Nav className="me-auto">
-      <Nav.Link href="#home">Game1</Nav.Link>
-      <Nav.Link href="#link">Game2</Nav.Link>
-      <Nav.Link href="#link">Game2</Nav.Link>
-      <Nav.Link href="#link">Game2</Nav.Link>
-      <Nav.Link href="#link">Game2</Nav.Link>
-      <Nav.Link href="#link">Game2</Nav.Link>
-      <Nav.Link href="#link">Game2</Nav.Link>
-    </Nav>
-  </Navbar.Collapse>
-</div>
-</Navbar>
-*/
+};
+
+export default TopNav
