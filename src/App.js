@@ -13,14 +13,30 @@ import { useEffect, useState } from 'react'
 
 const App = () => {
 
+// ----------------------------
+// test from class example
+
   let [backendUrl, setBackendUrl ] = useState("")
+  let [userList, setUserList ] = useState("")
 
   useEffect(() => {
     setBackendUrl(process.env.REACT_APP_BACKEND_URL)
   
   }, []);
 
+  useEffect(() => {
+    if (backendUrl === ""){
 
+    } else {
+      console.log(backendUrl, process.env.REACT_APP_BACKEND_URL);
+      fetch(backendUrl + "users/").then(response => response.json()).then(data => {
+        console.log("Data from /users/ is: " + JSON.stringify(data));
+        setUserList(data);
+      });
+    };
+  }, [backendUrl])
+
+// ----------------------------
 
   // if(!authToken) return <AuthLayout />
 
@@ -46,6 +62,7 @@ const App = () => {
 
         </Routes>
         <h2>sds is {backendUrl}</h2>
+        <h3> {userList} </h3>
     </main>
   );
 }
