@@ -12,7 +12,7 @@ import { AuthContext } from '../../context/AuthContext';
 
 // form object
 export const Register = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const isLoading = useContext(AuthContext);
     // Queries
     const { mutateAsync: createUserAccount } = useCreateUserAccount()
@@ -66,7 +66,7 @@ export const Register = () => {
             //     console.error('error')
             // }
             // navigate('/')
-            
+
         } catch (error) {
             console.error('Failed to create user account:', error);
         }
