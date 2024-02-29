@@ -1,4 +1,3 @@
-import * as v from "valibot"
 
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -104,7 +103,7 @@ export const Login = () => {
                 </Form>
             </div>
       </div>
-    )
-}
+    );
+};
 
 export default Login

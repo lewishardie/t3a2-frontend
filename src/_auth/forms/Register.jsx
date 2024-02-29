@@ -110,7 +110,7 @@ export const Register = () => {
                             onChange={handleChange}
                             name="password"
                             required
-                            minlength={10}
+                            minLength={10}
 
                         />
                         {/* {errors.password && <Form.Text className="text-danger">{errors.password}</Form.Text>} */}
@@ -134,11 +134,12 @@ export const Register = () => {
             </div>
         </div>
 
-    )
-}
+    );
+};
 
 export default Register
 
+// failed code
 
 // combined form data and valibot
 
