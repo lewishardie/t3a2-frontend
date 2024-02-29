@@ -32,8 +32,9 @@ export function BackendProvider(props) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(postData),
+                body: JSON.stringify(postData)
             });
+            console.log(response)
             // Handle response if needed
         } catch (error) {
             console.error('Failed to send data:', error);

@@ -1,6 +1,5 @@
 
 import { NavLink } from 'react-router-dom'
-import { useState } from 'react'
 
 import { Navbar, Container, Row } from "react-bootstrap"
 import { BiMessageSquareDots } from 'react-icons/bi'
