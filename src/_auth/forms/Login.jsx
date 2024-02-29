@@ -38,26 +38,6 @@ export const Login = () => {
         }
     };
 
-        // try {
-        //     const userData = {
-        //         username,
-        //         password
-        //     };
-
-        //     const response = await postData(loginData);
-
-        //     if (response.success) {
-        //         //redirect
-        //         console.log('login successful')
-        //     } else {
-        //         console.log('error')
-        //     }
-
-        // } catch (error) {
-        //     console.error('Faied to Login:', error)
-        // };
-    // }
-
     return (
 
         <div className="d-flex justify-content-center align-items-center 100-w vh-100">

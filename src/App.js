@@ -6,7 +6,7 @@ import RootLayout from './_root/RootLayout'
 import { Chats, Explore, Friends, Home, Notifications, Settings } from './_root/pages'
 import { Login } from './_auth/forms/Login'
 import { Register } from './_auth/forms/Register'
-import { useEffect, useState } from 'react'
+
 
 
 // const authToken = false;
@@ -16,25 +16,25 @@ const App = () => {
 // ----------------------------
 // test from class example
 
-  let [backendUrl, setBackendUrl ] = useState("")
-  let [userList, setUserList ] = useState("")
+  // let [backendUrl, setBackendUrl ] = useState("")
+  // let [userList, setUserList ] = useState("")
 
-  useEffect(() => {
-    setBackendUrl(process.env.REACT_APP_BACKEND_URL)
+  // useEffect(() => {
+  //   setBackendUrl(process.env.REACT_APP_BACKEND_URL)
   
-  }, []);
+  // }, []);
 
-  useEffect(() => {
-    if (backendUrl === ""){
+  // useEffect(() => {
+  //   if (backendUrl === ""){
 
-    } else {
-      console.log(backendUrl, process.env.REACT_APP_BACKEND_URL);
-      fetch(backendUrl + "users/").then(response => response.json()).then(data => {
-        console.log("Data from /users/ is: " + JSON.stringify(data));
-        setUserList(data);
-      });
-    };
-  }, [backendUrl])
+  //   } else {
+  //     console.log(backendUrl, process.env.REACT_APP_BACKEND_URL);
+  //     fetch(backendUrl + "users/").then(response => response.json()).then(data => {
+  //       console.log("Data from /users/ is: " + JSON.stringify(data));
+  //       setUserList(data.result);
+  //     });
+  //   };
+  // }, [backendUrl])
 
 // ----------------------------
 
@@ -61,8 +61,8 @@ const App = () => {
           </Route>
 
         </Routes>
-        <h2>sds is {backendUrl}</h2>
-        <h3> {userList} </h3>
+        {/* <h2>sds is {backendUrl}</h2>
+        <h3> {userList} </h3> */}
     </main>
   );
 }
