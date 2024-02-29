@@ -1,28 +1,28 @@
 
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Loader from '../../components/shared/Loader';
 // Style
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 // Backend
-import { useBackend } from '../../context/BackendProvider'
-// import { registerValidation } from '../../lib/validation';
-// import { parse } from 'valibot'
+import { useCreateUserAccount } from '../../lib/react-query/mutations';
+import { AuthContext } from '../../context/AuthContext';
 
 
 // form object
 export const Register = () => {
+    const navigate = useNavigate()
+    const isLoading = useContext(AuthContext);
+    // Queries
+    const { mutateAsync: createUserAccount } = useCreateUserAccount()
+
     const [formData, setFormData ] = useState({
         name: '',
         username: '',
         email: '',
         password: ''
-    })
-    const [isLoading, setIsLoading] = useState(false);
-
-    // Access backend-related functions
-    const { postData } = useBackend();
+    });
 
     // handle on change for inputs
     const handleChange = (e) => {
@@ -33,21 +33,45 @@ export const Register = () => {
     // handle submit
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
 
         try {
-            const response = await postData(formData);
-            console.log('Server response:', response)
-            console.log(formData)
-            // Handle success
-        } catch (error) {
-            console.error('Failed to register user:', error)
-            // Handle error
-        } finally {
-            setIsLoading(false);
-        }
-    };
+            const newUser = await createUserAccount(formData);
+            if (!newUser) {
+                console.error('sign up fail')
+                return null
+            }
 
+            // const session = await signInAccount({
+            //     email: formData.email,
+            //     password: formData.password,
+            // });
+
+            // if (!session) {
+            //     navigate("/register");
+            //     return;
+            // }
+
+            // // Check if user is logged in
+            // const isLoggedIn = await checkAuthUser();
+
+            // if (isLoggedIn) {
+            //     setFormData({
+            //         name: '',
+            //         username: '',
+            //         email: '',
+            //         password: ''
+            //     });
+            //     navigate('/')
+            // } else {
+            //     console.error('error')
+            // }
+            // navigate('/')
+            
+        } catch (error) {
+            console.error('Failed to create user account:', error);
+        }
+    }
+    
     return (
 
         <div className="d-flex justify-content-center align-items-center 100-w vh-100">
@@ -138,89 +162,3 @@ export const Register = () => {
 };
 
 export default Register
-
-// failed code
-
-// combined form data and valibot
-
-// export const Register = () => {
-//     const [formData, setFormdata ] = useState({
-//         name: '',
-//         username: '',
-//         email: '',
-//         password: '',
-//     })
-//     const [errors, setErrors] = useState({});
-//     const [isLoading, setIsLoading] = useState(false);
-//     const [valdated, setValidated] = useState(false)
-
-
-//     // Access postData from useBackend context
-//     const { postData } = useBackend();
-
-//     const handleChange = (e) => {
-//         const { name, value } = e.target;
-//         setFormdata({ ...formData, [name]: value });
-//     };
-
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         setIsLoading(true);
-
-//         const validation = parse(registerValidation, formData)
-//         if (validation.success) {
-//             try {
-//                 const response = await postData(formData);
-//                 console.log('Server response:', response)
-//                 console.log(formData)
-//                 // Handle success
-//             } catch (error) {
-//                 console.error('Failed to register user:', error)
-//                 // Handle error
-//             } finally {
-//                 setIsLoading(false);
-//             }
-//         } else {
-//             setErrors(validation.errors);
-//             setIsLoading(false);
-//         }
-//     };
-
-
-// seperate inputs and usestates
-
-// // export const Register = (props) => {
-// //     // variables for user registration form
-// //     const [name, setName] = useState('')
-// //     const [username, setUsername] = useState('')
-// //     const [email, setEmail] = useState('')
-// //     const [password, setPassword] = useState('')
-// //     // const [errors, SetErrors] = useState({})
-
-// //     
-
-// //     // Access backend-related functions
-// //     const { postData } = useBackend();
-
-// //     // handle submit of the form
-// //     const registerUser = async (e) => {
-// //         // prevent reload of the app
-// //         e.preventDefault();
-// //         console.log(name, username, email, password)
-
-// //         // try to send the data
-
-// //         try {
-// //             const userData = {
-// //                 name,
-// //                 username,
-// //                 email,
-// //                 password
-// //             }
-
-// //             await postData(userData);
-
-// //         } catch (error) {
-// //             console.error('Faied to register user:', error)
-// //         };
-// //     };
