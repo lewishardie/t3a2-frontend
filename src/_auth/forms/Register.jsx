@@ -1,76 +1,80 @@
 
-import { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Loader from '../../components/shared/Loader';
 // Style
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 // Backend
-import { useCreateUserAccount } from '../../lib/react-query/mutations';
-import { AuthContext } from '../../context/AuthContext';
+// import { useCreateUserAccount } from '../../lib/react-query/mutations';
+import { useAuth } from '../../context/AuthContext';
 
 
 // form object
 export const Register = () => {
-    // const navigate = useNavigate()
-    const isLoading = useContext(AuthContext);
+    // const isLoading = useContext(AuthContext);
+    const isLoading = false
     // Queries
-    const { mutateAsync: createUserAccount } = useCreateUserAccount()
-
-    const [formData, setFormData ] = useState({
+    
+    const [registerData, setRegisterData ] = useState({
         name: '',
         username: '',
         email: '',
         password: ''
     });
+    
+    const { register } = useAuth()
+    const navigate = useNavigate()
 
     // handle on change for inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setRegisterData({ ...registerData, [name]: value });
     };
 
     // handle submit
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
-            const newUser = await createUserAccount(formData);
+            const newUser = await register(registerData.name, registerData.username, registerData.email, registerData.password);
+            console.log(newUser)
+
             if (!newUser) {
                 console.error('sign up fail')
-                return null
+                return;
             }
-
-            // const session = await signInAccount({
-            //     email: formData.email,
-            //     password: formData.password,
-            // });
-
-            // if (!session) {
-            //     navigate("/register");
-            //     return;
-            // }
-
-            // // Check if user is logged in
-            // const isLoggedIn = await checkAuthUser();
-
-            // if (isLoggedIn) {
-            //     setFormData({
-            //         name: '',
-            //         username: '',
-            //         email: '',
-            //         password: ''
-            //     });
-            //     navigate('/')
-            // } else {
-            //     console.error('error')
-            // }
-            // navigate('/')
-
+            // redirect on succes
+            navigate('/login')       
         } catch (error) {
-            console.error('Failed to create user account:', error);
+            console.error('Failed to create user account: ', error)
+            }
         }
-    }
+
+        // const session = await signInAccount({
+        //     email: registerata.email,
+        //     password: registerData.password,
+        // });
+
+        // if (!session) {
+        //     navigate("/register");
+        //     return;
+        // }
+
+        // // Check if user is logged in
+        // const isLoggedIn = await checkAuthUser();
+
+        // if (isLoggedIn) {
+        //     setFormData({
+        //         name: '',
+        //         username: '',
+        //         email: '',
+        //         password: ''
+        //     });
+        //     navigate('/')
+        // } else {
+        //     console.error('error')
+        // }
+        // navigate('/')
     
     return (
 
@@ -88,13 +92,13 @@ export const Register = () => {
                         <Form.Control 
                             type="text" 
                             placeholder="Enter your name" 
-                            value={formData.name} 
+                            value={registerData.name} 
                             onChange={handleChange}
                             name="name"
                             required
                     
                             />
-                            {/* {errors && errors.name && <Form.Text className="text-danger">{errors.name}</Form.Text>} */}
+                            {/* {errors && errors.name && <register.Text className="text-danger">{errors.name}</Form.Text>} */}
                     </Form.Group>
 
                     <Form.Group className="mb-2" controlId="formBasicUsername">
@@ -102,7 +106,7 @@ export const Register = () => {
                         <Form.Control 
                             type="text" 
                             placeholder="Enter username" 
-                            value={formData.username} 
+                            value={registerData.username} 
                             onChange={handleChange}
                             name="username"
                             required
@@ -116,7 +120,7 @@ export const Register = () => {
                         <Form.Control 
                             type="email" 
                             placeholder="Enter email" 
-                            value={formData.email} 
+                            value={registerData.email} 
                             onChange={handleChange}
                             name="email"
                             required
@@ -130,7 +134,7 @@ export const Register = () => {
                         <Form.Control 
                             type="password" 
                             placeholder="Password" 
-                            value={formData.password} 
+                            value={registerData.password} 
                             onChange={handleChange}
                             name="password"
                             required
