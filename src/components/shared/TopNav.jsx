@@ -2,9 +2,7 @@
 import { Link, NavLink } from 'react-router-dom'
 import { FiLogOut } from "react-icons/fi";
 
-import Container from 'react-bootstrap/Container'
-import Navbar from 'react-bootstrap/Navbar'
-import { Button,  Image } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 // Icon Imports
 import { IoNotificationsOutline } from "react-icons/io5";
@@ -12,35 +10,69 @@ import { BiMessageSquareDots } from "react-icons/bi";
 import { LiaUserFriendsSolid } from "react-icons/lia";
 
 
+
 const TopNav = () => {
   return (
-    <Navbar className="bg-secondary">
-      <Container fluid>
-        <Link to="/" className="d-flex gap-3 align-items-center">
-          <img
-            src="/assets/icons/gamestart-logo.svg"
-            alt="logo"
-            width={50}
-            height={50}
-            />
-        </Link>
-        <Navbar.Toggle/>
-        <Navbar.Collapse className="justify-content-end">
-          <div className="d-flex gap-2 align-items-center">
+
+
+      <div className="sticky z-50 top-0 w-full flex justify-between items-center border-b-2 border-gray-200 py-4 px-5 bg-slate-400">
+        <div className="w-1/4">
+
+          <Link to="/home" className="">
+            <div className="w-[40px] md:w-[50px]">
+            <img
+              src="/assets/icons/gamestart-logo.svg"
+              alt="logo"
+              />
+            </div>
+          </Link>
+        </div>
+
+        <div className="w-1/2">
+          <div className="flex justify-between">
+            <Link to="/" className="bg-red rounded">
+              <p>game1</p>
+
+            </Link>
+            <Link to="/" className="bg-red rounded">
+              <p>game2</p>
+            </Link>
+            <Link to="/" className="bg-red rounded">
+              <p>game3</p>
+
+            </Link>
+            <Link to="/" className="bg-red rounded">
+              <p>game3</p>
+
+            </Link>
+            <Link to="/" className="bg-red rounded">
+              <p>game3</p>
+
+            </Link>
+            <Link to="/" className="bg-red rounded">
+              <p>game3</p>
+
+            </Link>
+          </div>
+
+        </div>
+
+        <div className="w-1/4">
+          <div className="flex justify-end gap-2">
             <NavLink 
               to="/friends" 
               className="btn"
               style={({isActive}) => isActive ? {color:"white"} : undefined }
-            >
+              >
               <LiaUserFriendsSolid size={25}/>
             </NavLink>
-           
+          
             {/* Need to change link to open the side menu with notifcations panel*/}
             <NavLink 
               to="/notifications" 
               className="btn"
               style={({isActive}) => isActive ? {color:"white"} : undefined }
-            >
+              >
               <IoNotificationsOutline size={25}/>
             </NavLink>
             <NavLink 
@@ -53,17 +85,17 @@ const TopNav = () => {
 
             {/* link to user profile */}
               {/* {`/profile/${user.id}` */}
-            <NavLink to="/settings">
-              <Image
+            <Link to="/settings">
+              <img
                 // {user.imageUrl ||}
                 src='/assets/icons/gamestart-logo.svg'
                 alt="profile"
                 width={40}
                 height={40}
                 roundedCircle
-                className=""
+                className="flex-center gap-3"
                 />
-            </NavLink>
+            </Link>
             <Button 
               variant="" 
               className=""
@@ -71,13 +103,13 @@ const TopNav = () => {
               >
               <FiLogOut 
                 //logout button
-              />
+                />
 
             </Button>
+          </div>
         </div>
-        </Navbar.Collapse>
-      </Container>
-      </Navbar>
+      </div>
+
 
   );
 };
