@@ -17,4 +17,30 @@ export async function createUserAccount(user) {
       }
       return response.json();
     });
-  }
+}
+
+
+// Login
+export async function login({ email, password }) {
+    const response = await fetch(backendUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password}),
+    });
+    if (!response.ok) {
+        throw new Error('Sign in failed');
+    }
+    return response.json()
+}
+
+// Logout
+export async function logout() {
+    const response = await fetch(backendUrl, {
+        method: 'POST' });
+        if (!response.ok) {
+            throw new Error('Sign out failed')
+        }
+    return true;
+}
