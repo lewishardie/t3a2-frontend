@@ -4,6 +4,8 @@ import Settings from './Settings'
 import Chats from './Chats'
 import Friends from './Friends'
 import Notifications from './Notifications'
+import CreatePost from './CreatePost'
+import Profile from './Profile'
 
 export {
     Home,
@@ -11,6 +13,8 @@ export {
     Settings,
     Friends,
     Chats,
-    Notifications
+    Notifications,
+    CreatePost,
+    Profile
     
 }

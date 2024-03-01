@@ -14,7 +14,7 @@ export default function AuthLayout() {
         <>
             {isAuthenticated ? (
                 <Navigate to="/" />
-            ): (
+            ) : (
                 <>
 
                     <div className="container-fluid">
