@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 // import { useHistory } from 'react-router-dom'
 
-import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
+// import ReactQuill from 'react-quill'
+// import 'react-quill/dist/quill.snow.css'
 
 // const modules= {
 //   toolbar: [

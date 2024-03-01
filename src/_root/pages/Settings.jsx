@@ -1,6 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
-import { Nav } from 'react-bootstrap'
+import { useState } from 'react'
 
 
 const Settings = () => {
