@@ -1,9 +1,9 @@
-import { Link, useLocation, NavLink} from 'react-router-dom'
+import { NavLink} from 'react-router-dom'
 
 import { BiMessageSquareDots } from 'react-icons/bi'
 import { IoNotificationsOutline } from 'react-icons/io5'
 import { LiaUserFriendsSolid } from 'react-icons/lia'
-import { IoHomeOutline } from "react-icons/io5";
+// import { IoHomeOutline } from "react-icons/io5";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoBookOutline } from "react-icons/io5";
 
