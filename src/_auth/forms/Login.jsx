@@ -1,41 +1,38 @@
 
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import { useBackend } from '../../context/BackendProvider'
-
+import { useAuth } from '../../context/AuthContext';
 
 export const Login = () => {
     const [loginData, setLoginData ] = useState({
-        username: '',
-        password: ''
-    })
+                username: '',
+                password: ''
+            })
+            const navigate = useNavigate()
 
-    const { postData } = useBackend();
+    const { login } = useAuth();
 
     // handle change for inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
         setLoginData({ ...loginData, [name]: value });
+        
     };
-
-    // handle form submission
+  
     const handleSubmit = async (e) => {
-        e.preventDefault();
+      e.preventDefault();
+      try {
+        await login(loginData.username, loginData.password);
         console.log(loginData)
-
-        try {
-            const response = await postData(loginData);
-            console.log('Server response:', response)
-            console.log(loginData)
-            // Handle success
-        } catch (error) {
-            console.error('Failed to register user:', error)
-            // Handle error
-        }
+        // Redirect or handle successful login
+        navigate('/')
+      } catch (error) {
+        // Handle login error
+      }
     };
 
     return (
