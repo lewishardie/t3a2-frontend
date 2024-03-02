@@ -1,7 +1,7 @@
-import { createContext, useState, useContext } from "react";
-import axios from 'axios';
+import { createContext, useState, useContext, useEffect } from "react";
+import axios from 'axios'
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 // const BACKEND_LOCAL = process.env.REACT_APP_LOCAL
 
 const AuthContext = createContext();
@@ -10,13 +10,20 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [ user, setUser ] = useState(null);
-  // const [ isAuthenticated, setIsAuthenticated ] = useState(false)
+  const [ isAuthenticated, setIsAuthenticated ] = useState(false)
 
-  const login = async (username, password) => {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token)
+  }, [])
+
+  const logInUser = async (username, password) => {
     try {
-      const response = await axios.post(BACKEND_URL + '/users/login', { username, password })
+      const response = await axios.post('http://localhost:3000/users/login', { username, password })
+      const token = response.data
+      localStorage.setItem('token', token);
       setUser(response.data.user);
-      return response.data;
+      return response;
     } catch (error) {
       throw new Error('Login failed');
     }
@@ -24,24 +31,24 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, username, email, password) => {
     try {
-      console.log(name)
-      const response = await axios.post(BACKEND_URL + 'users/register', { name, username, email, password});
+      const response = await axios.post('http://localhost:3000/users/register', { name, username, email, password});
       setUser(response.data.user);
       console.log(response.data.user)
-      return response.data;
+      return response;
     } catch (error) {
-      throw new Error('Registration failed');
-    }
-  }
+      console.log(error)
+      throw new Error('axios failed');
+    };
+  };
 
-  const logout = async () => {
-    setUser(null);
-  }
-
-  // const isAuthenticated = !!user;
+  // const logout = async () => {
+  //   setUser(null);
+  //   // setToken('');
+  //   // localStorage.removeItem('token')
+  // }
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, logInUser, register, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   )
