@@ -245,36 +245,3 @@
     @apply flex-center flex-col gap-4 border border-dark-4 rounded-[20px] px-5 py-8;
   }
 }
-
-/* @layer components { */
-  /* SHADCN COMPONENTS */
-  /* Form */
-  /* .shad-form_label {
-    @apply text-white !important;
-  }
-
-  .shad-form_message {
-    @apply text-red !important;
-  }
-
-  .shad-input {
-    @apply h-12 bg-dark-4 border-none placeholder:text-light-4 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3 !important;
-  }
-
-  .shad-textarea {
-    @apply h-36 bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3 !important;
-  } */
-
-  /* Button */
-  /* .shad-button_primary {
-    @apply bg-primary-500 hover:bg-primary-500 text-light-1 flex gap-2 !important;
-  }
-
-  .shad-button_dark_4 {
-    @apply h-12 bg-dark-4 px-5 text-light-1 flex gap-2 !important;
-  }
-
-  .shad-button_ghost {
-    @apply flex gap-4 items-center justify-start hover:bg-transparent hover:text-white !important;
-  }
-} */
