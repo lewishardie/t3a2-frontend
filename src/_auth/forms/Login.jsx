@@ -1,20 +1,21 @@
 
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import {  Link, useNavigate } from 'react-router-dom'
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-
 import { useAuth } from '../../context/AuthContext';
+import { ToastContainer, toast  } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Login = () => {
     const [loginData, setLoginData ] = useState({
-                username: '',
-                password: ''
-            })
-            const navigate = useNavigate()
-
-    const { login } = useAuth();
+        username: '',
+        password: ''
+    })
+    
+    const { logInUser } = useAuth();
+    const navigate = useNavigate()
 
     // handle change for inputs
     const handleChange = (e) => {
@@ -22,18 +23,45 @@ export const Login = () => {
         setLoginData({ ...loginData, [name]: value });
         
     };
+
+    // error
+    const handleError = (error) => {
+        toast.error(error, {
+            position: "bottom-left",
+        });
+    }
+    // success
+    const handleSuccess = (message) => {
+        toast.success(message, {
+            position: "bottom-right",
+        });
+        navigate('/home'); // Navigate after successful registration
+    }
+        
   
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => { 
       e.preventDefault();
       try {
-        await login(loginData.username, loginData.password);
-        console.log(loginData)
-        // Redirect or handle successful login
-        navigate('/')
-      } catch (error) {
-        // Handle login error
-      }
-    };
+            const session = await logInUser(loginData.username, loginData.password);
+            console.log(session)
+
+            if (session) {
+                handleSuccess('success');
+            } else {
+                handleError('error')
+            }
+        } catch (error) {
+            console.log(error)
+            handleError('Login failed. Please try again.');
+
+        } finally {
+
+            setLoginData({
+                password: "",
+                username: "",
+            })
+        }
+    }    
 
     return (
 
@@ -79,6 +107,7 @@ export const Login = () => {
                     </span>
                 </Form>
             </div>
+            <ToastContainer />
       </div>
     );
 };

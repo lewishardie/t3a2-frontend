@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 
 
 export default function AuthLayout() {
-
+    
     const { isAuthenticated } = useAuth()
 
     return (
@@ -23,15 +23,9 @@ export default function AuthLayout() {
 
                             {/* Right column for image */}
                             <div className="col-md-6 d-none d-md-block p-0 bg-dark">
-                                {/* <img
-                                    src="/assets/images/battlenet-ui.png"
-                                    alt="logo"
-                                    className="img-fluid h-100 w-100 object-cover"
-                                /> */}
                             </div>
                         </div>
                     </div>
-
                 </>
             )};
         </>

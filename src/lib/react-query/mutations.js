@@ -1,9 +1,9 @@
-import { useMutation } from '@tanstack/react-query';
-import { createUserAccount } from '../api/api';
+// import { useMutation } from '@tanstack/react-query';
+// import { createUserAccount } from '../api/api';
 
-export const useCreateUserAccount = () => {
-    return useMutation({
-      mutationFn: createUserAccount,
-      mutationKey: 'createUser'
-    });
-  };
+// export const useCreateUserAccount = () => {
+//     return useMutation({
+//       mutationFn: createUserAccount,
+//       mutationKey: 'createUser'
+//     });
+//   };

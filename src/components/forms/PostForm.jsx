@@ -5,27 +5,27 @@ import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 // import ReactQuill from 'react-quill'
 // import 'react-quill/dist/quill.snow.css'
 
-// const modules= {
-//   toolbar: [
-//     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-//     ['bold', 'italic', 'underline', 'strike'],
-//     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-//     ['link', 'image', 'video'] ,
-//     ['clean']
-//   ]
-// }
 
 //Define Form
 export const PostForm = () => {
-
+  
   const [postData, setPostData ] = useState({
     title: '',
     content: '',
     author: '',
-});
-
-//----------------------------------------------------------------------------------------
-// trying to use Quill
+  });
+  
+  //----------------------------------------------------------------------------------------
+  // const modules= {
+  //   toolbar: [
+  //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  //     ['bold', 'italic', 'underline', 'strike'],
+  //     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  //     ['link', 'image', 'video'] ,
+  //     ['clean']
+  //   ]
+  // }
+  // trying to use Quill
 
 // const PostForm = () => {
   // const [content, setContent] = useState("");
