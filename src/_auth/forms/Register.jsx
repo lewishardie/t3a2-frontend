@@ -8,13 +8,12 @@ import Form from 'react-bootstrap/Form';
 // Backend
 // import { useCreateUserAccount } from '../../lib/react-query/mutations';
 import { useAuth } from '../../context/AuthContext';
+import { ToastContainer, toast  } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
-
-// form object
 export const Register = () => {
     // const isLoading = useContext(AuthContext);
     const isLoading = false
-    // Queries
     
     const [registerData, setRegisterData ] = useState({
         name: '',
@@ -32,6 +31,20 @@ export const Register = () => {
         setRegisterData({ ...registerData, [name]: value });
     };
 
+    // error
+    const handleError = (error) => {
+        toast.error(error, {
+            position: "bottom-left",
+        });
+    }
+    // success
+    const handleSuccess = (message) => {
+        toast.success(message, {
+            position: "bottom-right",
+        });
+        navigate('/login'); // Navigate after successful registration
+    }
+        
     // handle submit
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,42 +52,25 @@ export const Register = () => {
             const newUser = await register(registerData.name, registerData.username, registerData.email, registerData.password);
             console.log(newUser)
 
-            if (!newUser) {
-                console.error('sign up fail')
-                return;
+            if (newUser) {
+                handleSuccess('success');
+            } else {
+                handleError('error')
             }
-            // redirect on succes
-            navigate('/login')       
         } catch (error) {
-            console.error('Failed to create user account: ', error)
-            }
+            console.log(error)
+            handleError('Registration failed. Please try again.');
+
+        } finally {
+            // reset form inputs
+            // setRegisterData({
+            //     name: "",
+            //     email: "",
+            //     password: "",
+            //     username: "",
+            // })
         }
-
-        // const session = await signInAccount({
-        //     email: registerata.email,
-        //     password: registerData.password,
-        // });
-
-        // if (!session) {
-        //     navigate("/register");
-        //     return;
-        // }
-
-        // // Check if user is logged in
-        // const isLoggedIn = await checkAuthUser();
-
-        // if (isLoggedIn) {
-        //     setFormData({
-        //         name: '',
-        //         username: '',
-        //         email: '',
-        //         password: ''
-        //     });
-        //     navigate('/')
-        // } else {
-        //     console.error('error')
-        // }
-        // navigate('/')
+    }
     
     return (
 
@@ -96,6 +92,7 @@ export const Register = () => {
                             onChange={handleChange}
                             name="name"
                             required
+                            autoComplete="off"
                     
                             />
                             {/* {errors && errors.name && <register.Text className="text-danger">{errors.name}</Form.Text>} */}
@@ -110,6 +107,7 @@ export const Register = () => {
                             onChange={handleChange}
                             name="username"
                             required
+                            autoComplete="off"
                     
                             />
                             {/* {errors.username && <Form.Text className="text-danger">{errors.username}</Form.Text>} */}
@@ -124,6 +122,7 @@ export const Register = () => {
                             onChange={handleChange}
                             name="email"
                             required
+                            autoComplete="off"
 
                         />
                             {/* {errors.email && <Form.Text className="text-danger">{errors.email}</Form.Text>}                         */}
@@ -138,7 +137,8 @@ export const Register = () => {
                             onChange={handleChange}
                             name="password"
                             required
-                            minLength={10}
+                            minLength={8}
+                            autoComplete="off"
 
                         />
                         {/* {errors.password && <Form.Text className="text-danger">{errors.password}</Form.Text>} */}
@@ -159,7 +159,9 @@ export const Register = () => {
                     </p>
          
                 </Form>
+                <ToastContainer/>
             </div>
+            
         </div>
 
     );
