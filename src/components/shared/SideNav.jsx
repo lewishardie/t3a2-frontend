@@ -80,6 +80,15 @@ export default function SideNav() {
               Settings
             </NavLink>
           </li>
+          <li className="side-nav-link">
+            <NavLink 
+            to='/profile'
+            className="flex gap-4 items-center py-4 px-2"
+            >
+              <IoSettingsOutline size={30}/>
+              Profile
+            </NavLink>
+          </li>
         </ul>
     </nav>
   )
