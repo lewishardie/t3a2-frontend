@@ -1,12 +1,9 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import axios from 'axios'
-
-// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-// const BACKEND_LOCAL = process.env.REACT_APP_LOCAL
+// import axios from 'axios'
+import api from '../lib/api/api'
 
 const AuthContext = createContext();
 
-export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [ user, setUser ] = useState(null);
@@ -14,15 +11,18 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token)
-  }, [])
-
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+  
   const logInUser = async (username, password) => {
     try {
-      const response = await axios.post('http://localhost:3000/users/login', { username, password })
+      const response = await api.post('/users/login', { username, password })
       const token = response.data
+      // console.log(response.data)
       localStorage.setItem('token', token);
-      setUser(response.data.user);
+      setIsAuthenticated(true)
       return response;
     } catch (error) {
       throw new Error('Login failed');
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, username, email, password) => {
     try {
-      const response = await axios.post('http://localhost:3000/users/register', { name, username, email, password});
+      const response = await api.post('/users/register', { name, username, email, password});
       setUser(response.data.user);
       console.log(response.data.user)
       return response;
@@ -41,31 +41,41 @@ export const AuthProvider = ({ children }) => {
     };
   };
 
-  // const logout = async () => {
-  //   setUser(null);
-  //   // setToken('');
-  //   // localStorage.removeItem('token')
-  // }
+    const logOutUser = () => {
+      localStorage.removeItem('token');
+      setIsAuthenticated(false);
+      setUser(null);
+    };
+
+    const value = {
+      user,
+      setUser,
+      isAuthenticated,
+      setIsAuthenticated,
+      logInUser,
+      logOutUser,
+      register
+
+    }
+ 
 
   return (
-    <AuthContext.Provider value={{ user, logInUser, register, isAuthenticated }}>
+    <AuthContext.Provider value={ value }>
       {children}
     </AuthContext.Provider>
   )
 }
 
+export const useAuth = () => useContext(AuthContext);
 
-  // const navigate = useNavigate();
-  // const queryClient = useQueryClient();
-  // const [user, setUser] = useState(null);
-  // const [isLoading, setIsLoading] = useState(true); // Added loading state
-  // const isAuthenticated = !!user;
 
   // useEffect(() => {
   //   const cookieFallback = localStorage.getItem("cookieFallback");
   //   if (cookieFallback === "[]" || cookieFallback === null || cookieFallback === undefined) {
   //     navigate("/login");
   //   }
+
+
 
 //     // Simulate asynchronous authentication
 //     const checkAuthUser = async () => {

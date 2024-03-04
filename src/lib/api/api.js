@@ -1,73 +1,21 @@
+import axios from 'axios'
 
-// import axios from 'axios'
+// Function to call the API
+const apiRequest = axios.create({
+    baseURL: process.env.REACT_APP_BACKEND_URL,
 
-//Create Account
-// export async function registerUserAccount() {
-//     try {
-//         const newUser = await axios.post({
-//             name: "",
-//             username: "",
-//             password: "",
-//             email: ""
-//         });
-//         if (!newUser)
-//     }
-// }
+});
 
-//Login
-// export async function logInAccount(username, password){
-//     try{
-//         const session = await axios.post('http://localhost:3000/users/login', { username, password })
+// Interceptors to include token with the request
+apiRequest.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers['jwt'] = token;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
-//         return session
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-
-// ------------------------------------------------------------------------------------------
-
-// // Define the URL of your backend server
-// const backendUrl = process.env.REACT_APP_BACKEND_URL;
-
-// // Create user account
-// export async function createUserAccount(user) {
-//     return fetch(backendUrl + "/users/register", {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(user),
-//     }).then((response) => {
-//       if (!response.ok) {
-//         throw new Error('Failed to create user account');
-//       }
-//       return response.json();
-//     });
-// }
-
-
-// // Login
-// export async function login({ email, password }) {
-//     const response = await fetch(backendUrl, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ email, password}),
-//     });
-//     if (!response.ok) {
-//         throw new Error('Sign in failed');
-//     }
-//     return response.json()
-// }
-
-// // Logout
-// export async function logout() {
-//     const response = await fetch(backendUrl, {
-//         method: 'POST' });
-//         if (!response.ok) {
-//             throw new Error('Sign out failed')
-//         }
-//     return true;
-// }
+export default apiRequest

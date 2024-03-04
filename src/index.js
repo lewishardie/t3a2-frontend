@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 // context
 import { AuthProvider } from './context/AuthContext';
+import { QueryProvider } from './context/QueryContext';
 
 
 
@@ -15,7 +16,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-          <App />
+        <QueryProvider>
+            <App />
+        </QueryProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

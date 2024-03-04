@@ -6,8 +6,7 @@ import RootLayout from './_root/RootLayout'
 import { Chats, Explore, Friends, Home, Notifications, Profile, Settings, CreatePost } from './_root/pages'
 import { Login } from './_auth/forms/Login'
 import { Register } from './_auth/forms/Register'
-
-import { Toaster } from 'react-hot-toast'
+import { ToastContainer } from 'react-toastify'
 
 import "./index.css";
 
@@ -40,7 +39,7 @@ const App = () => {
         </Route>
 
       </Routes>
-      <Toaster />
+      <ToastContainer/>
     </main>
   );
 }

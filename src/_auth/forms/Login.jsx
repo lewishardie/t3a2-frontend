@@ -20,8 +20,7 @@ export const Login = () => {
     // handle change for inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setLoginData({ ...loginData, [name]: value });
-        
+        setLoginData({ ...loginData, [name]: value });     
     };
 
     // error
@@ -35,7 +34,7 @@ export const Login = () => {
         toast.success(message, {
             position: "bottom-right",
         });
-        navigate('/home'); // Navigate after successful registration
+        navigate('/'); // Navigate after successful registration
     }
         
   
@@ -51,7 +50,7 @@ export const Login = () => {
                 handleError('error')
             }
         } catch (error) {
-            console.log(error)
+            console.log('Login Error:', error)
             handleError('Login failed. Please try again.');
 
         } finally {

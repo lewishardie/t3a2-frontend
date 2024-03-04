@@ -14,34 +14,6 @@ export const PostForm = () => {
     content: '',
     author: '',
   });
-  
-  //----------------------------------------------------------------------------------------
-  // const modules= {
-  //   toolbar: [
-  //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-  //     ['bold', 'italic', 'underline', 'strike'],
-  //     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  //     ['link', 'image', 'video'] ,
-  //     ['clean']
-  //   ]
-  // }
-  // trying to use Quill
-
-// const PostForm = () => {
-  // const [content, setContent] = useState("");
-  // const [title, setTitle] = useState("");
-  // const [category, setCategory ] = useState("")
-
-  // const post = {
-  //   title: title,
-  //   body: content,
-  //   category: category,
-  //   author: ''
-  // }
-
-  // const history = useHistory();
-
-//--------------------------------------------------------------------------------
 
   // handle on change for 
   const handleChange = (e) => {
@@ -85,16 +57,6 @@ export const PostForm = () => {
                 onChange={handleChange}
               />
 
-
-              {/* <ReactQuill
-                placeholder="Text (required)"
-                theme="snow"
-                name="content"          
-                value={value}
-                onChange={(value) => setValue(value)}
-                modules={modules}
-                required
-              /> */}
             </Form.Group>
 
             <div className="d-flex gap-4 align-items-center justify-content-end pb-4">

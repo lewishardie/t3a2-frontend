@@ -11,7 +11,7 @@ const RootLayout = () => {
 
   const { isAuthenticated } = useAuth()
 
-  return (
+    return (
       <>
           {!isAuthenticated ? (
               <Navigate to="/login" />

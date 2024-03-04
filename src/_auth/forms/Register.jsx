@@ -63,12 +63,12 @@ export const Register = () => {
 
         } finally {
             // reset form inputs
-            // setRegisterData({
-            //     name: "",
-            //     email: "",
-            //     password: "",
-            //     username: "",
-            // })
+            setRegisterData({
+                name: "",
+                email: "",
+                password: "",
+                username: "",
+            })
         }
     }
     

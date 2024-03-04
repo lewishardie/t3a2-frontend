@@ -1,6 +1,7 @@
 
 import { Link, NavLink } from 'react-router-dom'
 import { FiLogOut } from "react-icons/fi";
+import { useAuth } from '../../context/AuthContext';
 
 import { Button } from 'react-bootstrap'
 
@@ -10,8 +11,13 @@ import { BiMessageSquareDots } from "react-icons/bi";
 import { LiaUserFriendsSolid } from "react-icons/lia";
 
 
-
 const TopNav = () => {
+  
+  
+  const { logOutUser } = useAuth()
+  
+  
+
   return (
 
 
@@ -29,7 +35,7 @@ const TopNav = () => {
         </div>
 
         <div className="w-1/2">
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <Link to="/" className="bg-red rounded">
               <p>game1</p>
 
@@ -53,7 +59,7 @@ const TopNav = () => {
               <p>game3</p>
 
             </Link>
-          </div>
+          </div> */}
 
         </div>
 
@@ -82,30 +88,28 @@ const TopNav = () => {
               >
               <BiMessageSquareDots size={25}/>
             </NavLink>
-
-            {/* link to user profile */}
-              {/* {`/profile/${user.id}` */}
-            <Link to="/settings">
-              <img
-                // {user.imageUrl ||}
-                src='/assets/icons/gamestart-logo.svg'
-                alt="profile"
-                width={40}
-                height={40}
-                roundedCircle
-                className="flex-center gap-3"
-                />
-            </Link>
             <Button 
               variant="" 
               className=""
-              // onClick={signOut}
+              onClick={logOutUser}
               >
               <FiLogOut 
                 //logout button
                 />
 
             </Button>
+
+            <Link to="/profile">
+              <img
+                src='/assets/icons/gamestart-logo.svg'
+                alt="profile"
+                width={40}
+                height={40}
+                roundedCircle
+                className="fixed gap-3"
+                />
+            </Link>
+       
           </div>
         </div>
       </div>
