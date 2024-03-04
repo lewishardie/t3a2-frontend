@@ -1,13 +1,10 @@
 import { Routes, Route } from 'react-router-dom'
-
-
 import AuthLayout from './_auth/AuthLayout'
 import RootLayout from './_root/RootLayout'
 import { Chats, Explore, Friends, Home, Notifications, Profile, Settings, CreatePost, Missing } from './_root/pages'
 import { Login } from './_auth/forms/Login'
 import { Register } from './_auth/forms/Register'
 import { ToastContainer } from 'react-toastify'
-import RequireAuth from './components/RequireAuth'
 
 import "./index.css";
 

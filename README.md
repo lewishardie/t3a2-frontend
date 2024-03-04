@@ -1,7 +1,4 @@
 
-
-
-
 # t3a2-frontend
 Frontend / React app portion of Part B of a Coder Academy final project, a Full Stack MERN App.
 
