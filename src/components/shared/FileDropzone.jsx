@@ -14,7 +14,7 @@ const FileDropzone = ({ fieldChange, mediaUrl }) => {
         fieldChange(acceptedFiles);
         setFileUrl(URL.createObjectURL(acceptedFiles[0]))
 
-    }, [fieldChange])
+    }, [file])
 
     const {getRootProps, getInputProps} = useDropzone({
         onDrop,
