@@ -14,6 +14,7 @@ const FileDropzone = ({ fieldChange, mediaUrl }) => {
         fieldChange(acceptedFiles);
         setFileUrl(URL.createObjectURL(acceptedFiles[0]))
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file])
 
     const {getRootProps, getInputProps} = useDropzone({
