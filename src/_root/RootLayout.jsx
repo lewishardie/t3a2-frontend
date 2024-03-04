@@ -6,7 +6,6 @@ import { useAuth } from '../context/AuthContext';
 import { useLocation } from 'react-router-dom';
 
 
-
 const RootLayout = () => {
 
   const { isAuthenticated } = useAuth()
