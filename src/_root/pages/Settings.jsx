@@ -3,11 +3,12 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { useQuery } from '../../context/QueryContext';
 import { useAuth } from '../../context/AuthContext';
+// import { Loader } from '../../components/shared';
 
 
 const Settings = () => {
-  const { isAuthenticated } = useAuth()
-  const { userData, isLoading, error } = useQuery();
+  // const { isAuthenticated } = useAuth()
+  const { userData } = useQuery(); // isLoading, error
 
   const [userUpdate, setUserUpdate] = useState({
     name: '',
