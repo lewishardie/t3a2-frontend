@@ -1,3 +1,10 @@
+
+DATABASE_URL=mongodb+srv://T3A2User:2Eirw5BBtOxpvYxW@t3a2cluster.jdcwtwy.mongodb.net/?retryWrites=true&w=majority
+ENC_KEY=HereIsOurSuperSecretEncryptionKeyForSocialGamingAppSuperSecretAndSecure
+ENC_IV=OhWowWhatAnInitialVectorThisIsForOurAppAmazing
+JWT_SECRET=8bdee91429cd89c44c7dba3829cf58e679d4a9fc686feff7fde63756764d0c8257c7d8b80c897a11bd47946c7623a703b0357aba25204a698737beb95db0c8ac
+
+
 # t3a2-frontend
 Frontend / React app portion of Part B of a Coder Academy final project, a Full Stack MERN App.
 
