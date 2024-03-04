@@ -6,13 +6,16 @@ const CreatePost = () => {
   return (
     <div className="flex flex-1">
       <div className="common-container">
-        <div className="max-w-5x1 flex-start flex-col gap-3 justify-start w-100">
-            <div>
-                <h2 className="h3 fw-bold mb-0 pt-2 text-center">Create a post</h2>
-            </div>
-
-            <PostForm />
+        <div className="max-w-5x1 flex-start gap-3 justify-start w-full border-b-2 pb-2">
+          <img
+            src="../assets/icons/gamestart-logo.svg"
+            alt="add"
+            width={36}
+            height={36}
+          />
+          <h2 className="h3-bold md:h2-bold text-left w-full">Create a post</h2>
         </div>
+            <PostForm />
       </div>
     </div>
   )

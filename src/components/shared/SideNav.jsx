@@ -18,12 +18,12 @@ export default function SideNav() {
 
   return (
 
-    <nav className="side-nav" >
+    <nav className="side-nav w-1/4" >
         <ul className="flex flex-col gap-4 px-2">
           {/* Home Nav Link */}
           <li className="side-nav-link">
             <NavLink 
-              to='/home'
+              to='/'
               className="flex gap-4 items-center py-4 px-2"
             >
               <IoHomeOutline size={30}/>
@@ -87,6 +87,15 @@ export default function SideNav() {
             >
               <IoSettingsOutline size={30}/>
               Profile
+            </NavLink>
+          </li>
+          <li className="side-nav-link">
+            <NavLink 
+            to='/create-post'
+            className="flex gap-4 items-center py-4 px-2"
+            >
+              <IoSettingsOutline size={30}/>
+              Create Post
             </NavLink>
           </li>
         </ul>
