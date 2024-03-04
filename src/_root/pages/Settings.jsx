@@ -177,10 +177,8 @@ const handleSubmit = async (e) => {
       <button type="submit" className="bg-dark text-white px-4 py-2 rounded">
         Delete Account
       </button>
-
-      
-
       </div>
+      
       </div>
       </div>
     </div>

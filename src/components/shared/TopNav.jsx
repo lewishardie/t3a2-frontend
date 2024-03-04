@@ -21,17 +21,21 @@ const TopNav = () => {
   return (
 
 
-      <div className="sticky z-50 top-0 w-full flex justify-between items-center border-b-2 border-gray-200 py-4 px-5 bg-slate-400">
-        <div className="w-1/4">
+      <div className="top-nav">
+        <div className="w-1/4 flex items-center gap-5">
 
-          <Link to="/home" className="">
-            <div className="w-[40px] md:w-[50px]">
+          <Link to="/" className="">
+            <div className="w-[50px] md:w-[70px]">
             <img
               src="/assets/icons/gamestart-logo.svg"
               alt="logo"
               />
             </div>
           </Link>
+
+            <span className="">
+              <p className="h2-bold m-0">Convokers</p>
+            </span>
         </div>
 
         <div className="w-1/2">
@@ -63,8 +67,7 @@ const TopNav = () => {
 
         </div>
 
-        <div className="w-1/4">
-          <div className="flex justify-end gap-2">
+        <div className="w-1/4 flex justify-end gap-2 items-center">
             <NavLink 
               to="/friends" 
               className="btn"
@@ -88,6 +91,7 @@ const TopNav = () => {
               >
               <BiMessageSquareDots size={25}/>
             </NavLink>
+
             <Button 
               variant="" 
               className=""
@@ -95,22 +99,18 @@ const TopNav = () => {
               >
               <FiLogOut 
                 //logout button
-                />
-
+              />
             </Button>
 
             <Link to="/profile">
+              <div className="w-[40px] md:w-[60px]">
               <img
-                src='/assets/icons/gamestart-logo.svg'
-                alt="profile"
-                width={40}
-                height={40}
-                roundedCircle
-                className="fixed gap-3"
+                src="/assets/icons/gamestart-logo.svg"
+                alt="logo"
                 />
+              </div>
             </Link>
        
-          </div>
         </div>
       </div>
 

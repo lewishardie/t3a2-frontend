@@ -188,7 +188,7 @@
 
   /* Bottom Nav */
   .bottom-nav {
-    @apply z-50 flex-row w-full sticky bottom-0 bg-light-2 py-4 md:hidden;
+    @apply z-50 flex-row w-full fixed bottom-0 bg-light-2 py-4 md:hidden;
   }
 
   /* File uploader */
@@ -217,9 +217,14 @@
     @apply absolute bottom-0 p-5 flex-between w-full bg-gradient-to-t from-dark-3 to-transparent rounded-b-[24px] gap-2;
   }
 
+  /* Topnav */
+  .top-nav {
+    @apply sticky z-50 top-0 w-full flex justify-between items-center border-b-2 border-gray-200 py-4 px-5 bg-violet-400;
+  }
+
   /* Sidenav */
   .side-nav {
-    @apply hidden sticky md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-light-2;
+    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-light-2 border-r-2 border-gray-300;
   }
 
   .side-nav-link {
