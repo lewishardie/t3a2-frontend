@@ -6,6 +6,7 @@ import Friends from './Friends'
 import Notifications from './Notifications'
 import CreatePost from './CreatePost'
 import Profile from './Profile'
+import Missing from './Missing'
 
 export {
     Home,
@@ -15,6 +16,7 @@ export {
     Chats,
     Notifications,
     CreatePost,
-    Profile
+    Profile,
+    Missing
     
 }

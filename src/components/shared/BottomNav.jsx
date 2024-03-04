@@ -14,7 +14,7 @@ export default function BottomNav () {
     return (
         <nav className="bottom-nav" >
 
-            <ul className="flex flex-row justify-between px-2">
+            <ul className="flex flex-row bottom-0 justify-between px-2 mr-2 ml-2">
 
             {/* Home Nav Link
             <li className="bottom-nav-link">
