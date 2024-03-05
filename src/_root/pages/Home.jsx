@@ -12,11 +12,11 @@ export default function Home() {
   const { isAuthenticated } = useAuth()
   const { userData, isLoading, error } = useQuery();
 
-  const [selectedTab, setSelectedTab ] = useState('timeline');
+  // const [selectedTab, setSelectedTab ] = useState('timeline');
 
-  const handleChange = (tab) =>{
-    setSelectedTab(tab)
-  }
+  // const handleChange = (tab) =>{
+  //   setSelectedTab(tab)
+  // }
 
   if (!isAuthenticated) {
       return null;
@@ -30,17 +30,35 @@ export default function Home() {
       return <div>Error: {error.message}</div>; // Render error message if there's an error
   }
 
-  let tabContent;
-  if (selectedTab === 'timeline') {
-    tabContent = <Timeline />;
-  } else if (selectedTab === 'community') {
-    tabContent = <CommunityTimeline />;
-  }
+  // let tabContent;
+  // if (selectedTab === 'timeline') {
+  //   tabContent = <Timeline />;
+  // } else if (selectedTab === 'community') {
+  //   tabContent = <CommunityTimeline />;
+  // }
 
   return (
-    <div className="flex lg:w-2/3 min-w-[500px] w-full flex-col">
 
-      {/* nav items */}
+        <div className="flex lg:w-2/3 min-w-[500px] w-full flex-col">
+          <div className="bg-white">
+        <nav className="flex flex-col sm:flex-row">
+            <button 
+              className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500">
+                Timeline
+            </button>
+            <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+                Community
+            </button>
+            {/* <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+                Tab 3
+            </button>
+            <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+                Tab 4
+            </button> */}
+        </nav>
+    </div>
+
+      {/* nav items
       <div> 
         <ul className="flex border-b">
           <li className="mb-px mr-1">
@@ -64,14 +82,14 @@ export default function Home() {
             Community</button>
           </li>
         </ul>
-      </div>
+      </div> */}
       <div>
       </div>
       {/* timeline content */}
         <div className="home-container">
           <div className="home-posts">
               <h2 className="h3-bold md:h2-bold text-left w-full">Home Feed, Hello {userData?.username}</h2>
-                  {tabContent}
+                  {/* {tabContent} */}
               <ul className="flex flex-col flex-1 gap-9 w-full">
                 <li className="flex justify-center w-full">
 

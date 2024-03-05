@@ -5,12 +5,18 @@ import { Chats, Explore, Friends, Home, Notifications, Profile, Settings, Create
 import { Login } from './_auth/forms/Login'
 import { Register } from './_auth/forms/Register'
 import { ToastContainer } from 'react-toastify'
+// import { useAuth } from './context/AuthContext'
+import { useQuery } from './context/QueryContext'
 
 import "./index.css";
 
 
 
 const App = () => {
+
+  const { userData } = useQuery()
+
+  console.log(userData)
 
   return (
     <main className="flex h-screen">
@@ -29,12 +35,12 @@ const App = () => {
           <Route path="/friends" element={<Friends />}/>
           <Route path="/notifications" element={<Notifications />}/>
           <Route path="/settings" element={<Settings />}/>
-          <Route path="/profile" element={<Profile />}/>
+          <Route path={`/profile/${userData?.username}`} element={<Profile />}/>
           <Route path="/create-post" element={<CreatePost />}/>
-        </Route>
-
           {/* catch all */}
           <Route path="*" element={<Missing />}/>
+        </Route>
+
 
       </Routes>
       <ToastContainer/>
