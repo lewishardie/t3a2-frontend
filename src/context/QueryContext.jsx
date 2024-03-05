@@ -55,6 +55,26 @@ export const QueryProvider = ({ children }) => {
         }
     }
 
+    const getFriendsList = async () => {
+        try {
+            if(!!isAuthenticated) {
+                return
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get('/friends');
+            console.log(response)
+
+            setUserData(response.data)
+            setIsLoading(false)
+            console.log(response)
+
+        } catch(error) {
+            console.error("Error", error)
+            setError(error)
+            setIsLoading(false)
+        }
+    }
+
     useEffect(() => {
         fetchUserData(); // Fetch user data when component mounts
 
@@ -66,7 +86,8 @@ export const QueryProvider = ({ children }) => {
         isLoading,
         error,
         fetchUserData,
-        updateUserData
+        updateUserData,
+        getFriendsList
 
     }
 
