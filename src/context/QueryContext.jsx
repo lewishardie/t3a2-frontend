@@ -1,100 +1,253 @@
-import { createContext, useContext } from 'react'
-import apiRequest from '../lib/api/api'
-// import { Loader } from '../../components/shared';
-
+import { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import apiRequest from '../lib/api/api';
 import { useAuth } from '../context/AuthContext';
-import { useEffect, useState } from 'react';
 
 const QueryContext = createContext();
 
 export const useQuery = () => useContext(QueryContext);
 
 export const QueryProvider = ({ children }) => {
-    const [ userData, setUserData ] = useState(null); 
-    const [ isLoading, setIsLoading ] = useState(false)
-    const [ error, setError ] = useState(null)
     const { isAuthenticated } = useAuth();
+    const [ userData, setUserData ] = useState(null);
+    const [ userListData, setUserListData ] = useState(null);
+    const [ friendListData, setFriendListData ] = useState(null);
+    const [ isLoading, setIsLoading] = useState(false);
+    const [ error, setError ] = useState(null);
 
-    const fetchUserData = async () => {
+    const fetchData = useCallback(async (endpoint, setStateCallback) => {
+        try {
+            setIsLoading(true);
+            const response = await apiRequest.get(endpoint);
+            setStateCallback(response.data);
+            console.log("hello")
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setError("Failed to fetch data");
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (isAuthenticated) {
+                await fetchData('/users', setUserData);
+            }
+        };
+
+        const getAllUsers = async () => {
+            if (isAuthenticated) {
+                await fetchData('/users/list/all', setUserListData);
+            }
+        };
+
+        const getFriendsList = async () => {
+            if (isAuthenticated) {
+                await fetchData('/friends', setFriendListData);
+            }
+        };
+
+        fetchUserData();
+        console.log("cya")
+        getAllUsers();
+        console.log("cya")
+        getFriendsList();
+        console.log("cya")
+
+        return () => {
+            setError(null); // Reset error on unmount
+        };
+    }, [isAuthenticated]);
+
+    const getUserById = async (_id) => {
         try {
             if (!isAuthenticated) {
                 return;
             }
             setIsLoading(true);
-            const response = await apiRequest.get('/users');
-
-            // Set User Data to current user
-            setUserData(response.data)
-            setIsLoading(false)
-            console.log(response)
-            
+            const response = await apiRequest.get(`/users/${_id}`);
+            setIsLoading(false);
+            return response.data;
         } catch(error) {
-            console.error("Error", error)
-            setError(error)
-            setIsLoading(false)
+            console.error("Error getting user by ID:", error);
+            setError("Failed to get user by ID");
+            setIsLoading(false);
+            return null;
         }
-    }
+    };
+
+    const getUserByUsername = async (username) => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get(`/users/username/${username}`);
+            setIsLoading(false);
+            return response.data;
+        } catch(error) {
+            console.error("Error getting user by username:", error);
+            setError("Failed to get user by username");
+            setIsLoading(false);
+            return null;
+        }
+    };
 
     const updateUserData = async () => {
         try {
-            if(!!isAuthenticated) {
-                return
+            if (!isAuthenticated) {
+                return;
             }
             setIsLoading(true);
-            const response = await apiRequest.put('/users');
-            console.log(response)
-
+            const response = await apiRequest.patch('/users');            
+            setIsLoading(false);
             setUserData(response.data)
-            setIsLoading(false)
-            console.log(response)
-
         } catch(error) {
-            console.error("Error", error)
-            setError(error)
-            setIsLoading(false)
+            console.error("Error updating user data:", error);
+            setError("Failed to update user data");
+            setIsLoading(false);
+            return null;
         }
-    }
+    };
 
-    const getFriendsList = async () => {
+    const createFriendRequest = async (username) => {
         try {
-            if(!!isAuthenticated) {
-                return
+            if (!isAuthenticated) {
+                return;
             }
             setIsLoading(true);
-            const response = await apiRequest.get('/friends');
-            console.log(response)
+            const response = await apiRequest.post(`/friends/add/${username}`);
+            setIsLoading(false);
+            console.log("Friend Request Sent")
 
-            setUserData(response.data)
-            setIsLoading(false)
+            return response.data
+        } catch(error) {
+            console.error("Error creating friend request:", error);
+            setError("Failed to create friend request");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+    const confirmFriendRequest = async (username) => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.put(`/friends/accept/${username}`);
+            console.log("Friend Request Accepted")
+
+            setIsLoading(false);
+            return response.data;
+        } catch(error) {
+            console.error("Error confirming friend request:", error);
+            setError("Failed to confirm friend request");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+    const viewReceivedRequests = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get(`/friends/received`);
+            console.log("Received friend requests:", response.data);
+
+            setIsLoading(false);
+            return response.data;
+        } catch(error) {
+            console.error("Error viewing received friend requests:", error);
+            setError("Failed to view received friend requests");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+    const viewPendingRequests = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get(`/friends/requested`);
             console.log(response)
+            
+            setIsLoading(false);
+
+            return response.data;
+        } catch(error) {
+            console.error("Error viewing pending friend requests:", error);
+            setError("Failed to view pending friend request");
+            setIsLoading(false);
+            return null;
+        }
+    };
+    
+
+    const rejectFriendRequest = async (username) => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.delete(`/friends/reject/${username}`);
+            console.log("Friend Request Rejected")
+
+            setIsLoading(false);
+            return response.data;
+        } catch(error) {
+            console.error("Error rejecting friend request:", error);
+            setError("Failed to reject friend request");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+    const deleteFriend = async (username) => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.delete(`/friends/reject/${username}`);
+            setFriendListData(response.data)
+            setIsLoading(false);
+            return response.data;
 
         } catch(error) {
-            console.error("Error", error)
-            setError(error)
-            setIsLoading(false)
+            console.error("Error rejecting friend request:", error);
+            setError("Failed to reject friend request");
+            setIsLoading(false);
+            return null;
         }
-    }
-
-    useEffect(() => {
-        fetchUserData(); // Fetch user data when component mounts
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAuthenticated]);
+    };
 
     const value = {
         userData,
         isLoading,
         error,
-        fetchUserData,
+        userListData,
+        friendListData,
         updateUserData,
-        getFriendsList
+        getUserByUsername,
+        getUserById,
+        createFriendRequest,
+        confirmFriendRequest,
+        rejectFriendRequest,
+        deleteFriend,
+        viewReceivedRequests,
+        viewPendingRequests,
 
-    }
-
+    };
 
     return (
-        <QueryContext.Provider value = {value}>
+        <QueryContext.Provider value={value}>
             {children}
         </QueryContext.Provider>
-    )
-}
+    );
+};

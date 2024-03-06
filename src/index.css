@@ -136,7 +136,7 @@
 
   /* Home */
   .home-container {
-    @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
+    @apply flex flex-col flex-1 items-center gap-10 py-10 px-5 md:px-8 lg:p-14;
   }
 
   .home-posts {
@@ -219,7 +219,7 @@
 
   /* Topnav */
   .top-nav {
-    @apply sticky z-50 top-0 w-full flex justify-between items-center border-b-2 border-gray-200 py-4 px-5 bg-violet-400;
+    @apply sticky z-50 top-0 border-b-2 border-gray-200 py-4 px-5 bg-violet-400;
   }
 
   /* Sidenav */
@@ -247,6 +247,6 @@
 
   /* User card */
   .user-card {
-    @apply flex-center flex-col gap-4 border border-dark-4 rounded-[20px] px-5 py-8;
+    @apply flex items-center justify-between gap-4 border p-2;
   }
 }

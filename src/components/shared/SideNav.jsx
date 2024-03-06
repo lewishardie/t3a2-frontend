@@ -9,16 +9,19 @@ import { IoHomeOutline } from "react-icons/io5";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoBookOutline } from "react-icons/io5";
 
+import { useQuery } from '../../context/QueryContext';
+
 
 
 export default function SideNav() {
   // const { pathname } = useLocation()
 
   // const [showSidebar, setShowSidebar] = useState(true)
+  const { userData } = useQuery()
 
   return (
 
-    <nav className="side-nav w-1/4" >
+    <nav className="side-nav w-1/5" >
         <ul className="flex flex-col gap-4 px-2">
           {/* Home Nav Link */}
           <li className="side-nav-link">
@@ -82,7 +85,7 @@ export default function SideNav() {
           </li>
           <li className="side-nav-link">
             <NavLink 
-            to='/profile'
+            to={`/profile/${userData?.username}`}
             className="flex gap-4 items-center py-4 px-2"
             >
               <IoSettingsOutline size={30}/>
