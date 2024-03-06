@@ -42,7 +42,6 @@ export const Login = () => {
       e.preventDefault();
       try {
             const session = await logInUser(loginData.username, loginData.password);
-            console.log(session)
 
             if (session) {
                 handleSuccess('success');

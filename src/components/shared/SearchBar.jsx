@@ -1,14 +1,16 @@
 import React from 'react'
 import { useState } from 'react'
-import { IoSearch } from "react-icons/io5";
+import { IoAddCircleOutline, IoSearch } from "react-icons/io5";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { UserCard } from './index'
+import { useQuery } from '../../context/QueryContext';
 
 
 const SearchBar = ({placeholder, data}) => {
     
     const [ filterData, setFilterData ] = useState([]);
     const [ searchWord, setSearchWord ] = useState('')
+    const { createFriendRequest } = useQuery()
 
     const handleChange = (e) => {
         const searchResult = e.target.value;
@@ -22,6 +24,18 @@ const SearchBar = ({placeholder, data}) => {
         } else {
             setFilterData(newFilter)
         };
+    };
+
+    const handleRequest = async (username) => {
+      console.log("here")
+      try {
+        if (username) {
+          await createFriendRequest(username);
+          console.log("Friend request sent to:", username);
+        }
+      } catch (error) {
+        console.error("Error sending friend request:", error);
+      }
     };
 
     const clearInput = () => {
@@ -53,9 +67,15 @@ const SearchBar = ({placeholder, data}) => {
             {filterData.length !== 0 && (
                 <div className="flex-row shadow-lg shadow-black overflow-scroll max-h-80 items-center rounded-lg">
                     {filterData.slice(0, 15).map((value, key) => (
-                        <UserCard key={key} data={value} />
-                    )                   
-                    )}
+                        <div key ={key} className="flex items-center border-b-2">
+                            <UserCard data={value}/>
+                                <button 
+                                    className="pr-4" 
+                                    onClick={() => handleRequest(value?.username)}>
+                                    <IoAddCircleOutline size={40}/>
+                                </button>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>

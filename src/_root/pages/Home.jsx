@@ -1,9 +1,8 @@
 import { useAuth } from '../../context/AuthContext'
 import { useQuery } from '../../context/QueryContext';
-import { Loader, Timeline, CommunityTimeline } from '../../components/shared';
+import { Loader } from '../../components/shared';
 // import Timeline from '../../components/shared'
 // import CommunityTimeline from '../../components/shared';
-import { useState } from 'react';
 
 
 
@@ -11,6 +10,7 @@ export default function Home() {
   
   const { isAuthenticated } = useAuth()
   const { userData, isLoading, error } = useQuery();
+
 
 
   if (!isAuthenticated) {
