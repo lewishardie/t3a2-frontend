@@ -87,7 +87,7 @@ const handleSubmit = async (e) => {
             type="text"
             id="name"
             name="name"
-            placeholder={`${userData.name}`}
+            placeholder={`${userData?.name}`}
             value={userUpdate.name}
             onChange={handleChange}
             className="mt-1 p-2 block w-full rounded border border-gray-300"
@@ -102,7 +102,7 @@ const handleSubmit = async (e) => {
             type="email"
             id="email"
             name="email"
-            placeholder={`${userData.email}`}
+            placeholder={`${userData?.email}`}
             value={userUpdate.email}
             onChange={handleChange}
             className="mt-1 p-2 block w-full rounded border border-gray-300"
@@ -118,7 +118,7 @@ const handleSubmit = async (e) => {
             id="password"
             name="password"
             placeholder="Change Password?"
-            value={userUpdate.password}
+            value={userUpdate?.password}
             onChange={handleChange}
             className="mt-1 p-2 block w-full rounded border border-gray-300"
           />
@@ -132,7 +132,7 @@ const handleSubmit = async (e) => {
             id="confirm-password"
             name="confirm-password"
             placeholder="Confirm Password"
-            value={userUpdate.confirmPassword}
+            value={userUpdate?.confirmPassword}
             onChange={handleChange}
             className="mt-1 p-2 block w-full rounded border border-gray-300"
           />
@@ -146,9 +146,9 @@ const handleSubmit = async (e) => {
             type="textarea"
             id="about"
             name="about"
-            placeholder={userUpdate.about ? `Write something about yourself: ${userData.about}` : 'Write something about yourself?'}
+            placeholder={userUpdate?.about ? `Write something about yourself: ${userData?.about}` : 'Write something about yourself?'}
             rows="3"
-            value={userUpdate.about}
+            value={userUpdate?.about}
             onChange={handleChange}
             className="mt-1 p-2 block w-full rounded border border-gray-300"
           />

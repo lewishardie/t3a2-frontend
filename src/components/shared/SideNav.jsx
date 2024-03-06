@@ -21,7 +21,7 @@ export default function SideNav() {
 
   return (
 
-    <nav className="side-nav w-1/4" >
+    <nav className="side-nav w-1/5" >
         <ul className="flex flex-col gap-4 px-2">
           {/* Home Nav Link */}
           <li className="side-nav-link">

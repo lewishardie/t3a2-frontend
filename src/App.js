@@ -16,8 +16,6 @@ const App = () => {
 
   const { userData } = useQuery()
 
-  console.log(userData)
-
   return (
     <main className="flex h-screen">
       <Routes>

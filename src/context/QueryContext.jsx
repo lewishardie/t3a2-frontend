@@ -10,17 +10,24 @@ const QueryContext = createContext();
 export const useQuery = () => useContext(QueryContext);
 
 export const QueryProvider = ({ children }) => {
+    const { isAuthenticated } = useAuth();
+    
     const [ userData, setUserData ] = useState(null); 
     const [ userListData, setUserListData ] = useState(null);
     const [ friendListData, setFriendListData ] = useState(null);
+    const [ getUserId, setGetUserId ] = useState(null);
+
+    const [ selectedUser , setSelectedUser ] = useState(null)
     
-    
+    const [ makeFriendRequest, setMakeFriendRequest ] = useState(null);
+    const [ acceptFriendRequest, setAcceptFriendRequest ] = useState([]);
+
     const [ isLoading, setIsLoading ] = useState(false)
     const [ error, setError ] = useState(null)
-    const { isAuthenticated } = useAuth();
 
 // =================================================
 // ============ USER QUERIES =====================
+
 
     const fetchUserData = async () => {
         try {
@@ -33,7 +40,6 @@ export const QueryProvider = ({ children }) => {
             // Set User Data to current user
             setUserData(response.data)
             setIsLoading(false)
-            console.log(response)
             
         } catch(error) {
             console.error("Error", error)
@@ -42,6 +48,8 @@ export const QueryProvider = ({ children }) => {
         }
     }
 
+// ====== UPDATE
+
     const updateUserData = async () => {
         try {
             if(!!isAuthenticated) {
@@ -49,11 +57,9 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.put('/users');
-            console.log(response)
 
             setUserData(response.data)
             setIsLoading(false)
-            console.log(response)
 
         } catch(error) {
             console.error("Error", error)
@@ -62,6 +68,7 @@ export const QueryProvider = ({ children }) => {
         }
     }
 
+// ====== GET ALL
     
     const getAllUsers = async () => {
         try {
@@ -70,8 +77,6 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.get('/users/list/all');
-            console.log(response)
-            console.log(response.data)
             
             setUserListData(response.data)
             setIsLoading(false)
@@ -90,11 +95,30 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.get(`/users/username/${username}`);
+            console.log(username)
+            
+            setSelectedUser(response.data)
+            setIsLoading(false)
+            
+        } catch(error) {
+            console.error("Error", error)
+            setError(error)
+            setIsLoading(false)
+        }
+    }
+
+    const getUserById = async (_id) => {
+        try {
+            if(!!isAuthenticated) {
+                return
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get(`/users/${_id}`);
+            console.log(_id)
             console.log(response)
             
-            setUserData(response.data)
+            setGetUserId(response.data)
             setIsLoading(false)
-            console.log(response)
             
         } catch(error) {
             console.error("Error", error)
@@ -111,13 +135,32 @@ export const QueryProvider = ({ children }) => {
             if(!!isAuthenticated) {
                 return
             }
+            console.log("Making friend request for username:", username);
             setIsLoading(true);
-            const response = await apiRequest.post(`/add/${username}`);
-            console.log(response)
+            const response = await apiRequest.post(`/friends/add/${username}`);
             
-            setUserData(response.data)
+            setMakeFriendRequest(response.data)
             setIsLoading(false)
-            console.log(response)
+            console.log("Friend request made successfully:", response.data);
+            
+        } catch(error) {
+            console.error("Error making friend request:", error);
+            setError(error)
+            setIsLoading(false)
+        }
+    }
+
+    const confirmFriendRequest = async (username) => {
+        try {
+            if(!!isAuthenticated) {
+                return
+            }
+            setIsLoading(true);
+            const response = await apiRequest.put(`/friends/accept/${username}`);
+            console.log(username)
+            
+            setAcceptFriendRequest(response.data)
+            setIsLoading(false)
             
         } catch(error) {
             console.error("Error", error)
@@ -134,8 +177,6 @@ export const QueryProvider = ({ children }) => {
 
             setIsLoading(true);
             const response = await apiRequest.get('/friends');
-            console.log(response)
-            console.log(response.data)
 
             setFriendListData(response.data)
             setIsLoading(false)
@@ -151,23 +192,33 @@ export const QueryProvider = ({ children }) => {
     useEffect(() => {
         fetchUserData(); // Fetch user data when component mounts
         getAllUsers();
-        getFriendsList()
+
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated]);
 
     const value = {
         userData,
-        friendListData,
-        userListData,
         isLoading,
         error,
         fetchUserData,
         updateUserData,
         getFriendsList,
+        friendListData,
         getAllUsers,
+        userListData,
         getUserByUsername,
+        acceptFriendRequest,
+        confirmFriendRequest,
+        selectedUser,
+        setSelectedUser,
         createFriendRequest,
+        setMakeFriendRequest,
+        makeFriendRequest,
+        getUserId,
+        setGetUserId,
+        getUserById,
+
 
     }
 
