@@ -5,8 +5,6 @@ import { Chats, Explore, Friends, Home, Profile, Settings, CreatePost, Missing }
 import { Login } from './_auth/forms/Login'
 import { Register } from './_auth/forms/Register'
 import { ToastContainer } from 'react-toastify'
-// import { useAuth } from './context/AuthContext'
-import { useQuery } from './context/QueryContext'
 
 import "./index.css";
 
