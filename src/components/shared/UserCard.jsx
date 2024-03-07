@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FaCircleXmark } from "react-icons/fa6";
 
 
 const UserCard = ({ data, onDelete, onAdd, isFriend }) => {
@@ -19,9 +20,9 @@ const UserCard = ({ data, onDelete, onAdd, isFriend }) => {
 
   return (
     
-    <div className="user-card w-full rounded-4 shadow-gray-300 shadow-md">
+    <div className="flex flex-row rounded-4 shadow-gray-300 shadow-md items-center  ">
 
-      <Link to={'/profile/username'} className="flex flex-row w-full gap-4 p-2">
+      <Link to={`/profile/${username}`} className="flex w-full gap-4 p-2">
         <img
           src={data?.imageUrl || "/assets/icons/gamestart-logo.svg"}
           alt="user"
@@ -29,14 +30,14 @@ const UserCard = ({ data, onDelete, onAdd, isFriend }) => {
           />
 
         <div className="flex-center">
-          <p className="h3 text-black text-center ">
+          <p className="h3 text-black text-center gap-2">
             {username}
           </p>
         </div>
       </Link>
       {onDelete && (
-        <button onClick={handleDelete} className="bg-gray-400 text-white px-3 py-2 rounded-full hover:bg-red">
-          X
+        <button onClick={handleDelete} className="bg-gray-600 text-white m-2 rounded-full border-4 hover:border-red hover:bg-red">
+          <FaCircleXmark size={30}/>
         </button>
       )}
       {onAdd && !isFriend && (
