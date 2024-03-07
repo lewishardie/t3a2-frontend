@@ -19,7 +19,6 @@ export const QueryProvider = ({ children }) => {
             setIsLoading(true);
             const response = await apiRequest.get(endpoint);
             setStateCallback(response.data);
-            console.log("hello")
 
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -42,18 +41,18 @@ export const QueryProvider = ({ children }) => {
             }
         };
 
-        const getFriendsList = async () => {
-            if (isAuthenticated) {
-                await fetchData('/friends', setFriendListData);
-            }
-        };
+        // const getFriendsList = async () => {
+        //     if (isAuthenticated) {
+        //         await fetchData('/friends', setFriendListData);
+        //     }
+        // };
 
         fetchUserData();
-        console.log("cya")
+
         getAllUsers();
-        console.log("cya")
-        getFriendsList();
-        console.log("cya")
+
+        // getFriendsList();
+
 
         return () => {
             setError(null); // Reset error on unmount
@@ -111,6 +110,26 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
+    //===== Friend Routes ========//
+
+    const getFriendsList = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get('/friends');
+            setIsLoading(false);
+            return response.data;
+        } catch(error) {
+            console.error("Error getting user by username:", error);
+            setError("Failed to get user by username");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+
     const createFriendRequest = async (username) => {
         try {
             if (!isAuthenticated) {
@@ -156,8 +175,6 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.get(`/friends/received`);
-            console.log("Received friend requests:", response.data);
-
             setIsLoading(false);
             return response.data;
         } catch(error) {
@@ -175,8 +192,7 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.get(`/friends/requested`);
-            console.log(response)
-            
+
             setIsLoading(false);
 
             return response.data;
@@ -214,8 +230,7 @@ export const QueryProvider = ({ children }) => {
                 return;
             }
             setIsLoading(true);
-            const response = await apiRequest.delete(`/friends/reject/${username}`);
-            setFriendListData(response.data)
+            const response = await apiRequest.delete(`/friends/${username}`);
             setIsLoading(false);
             return response.data;
 
@@ -226,6 +241,8 @@ export const QueryProvider = ({ children }) => {
             return null;
         }
     };
+
+    //===== Post Routes ====//
 
     const value = {
         userData,
@@ -239,9 +256,11 @@ export const QueryProvider = ({ children }) => {
         createFriendRequest,
         confirmFriendRequest,
         rejectFriendRequest,
-        deleteFriend,
         viewReceivedRequests,
         viewPendingRequests,
+        getFriendsList,
+        deleteFriend,
+        
 
     };
 
