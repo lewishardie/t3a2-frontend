@@ -57,6 +57,7 @@ export const QueryProvider = ({ children }) => {
         return () => {
             setError(null); // Reset error on unmount
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated]);
 
     const getUserById = async (_id) => {
@@ -244,6 +245,120 @@ export const QueryProvider = ({ children }) => {
 
     //===== Post Routes ====//
 
+
+
+    const getPost = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get('/posts');
+            setIsLoading(false);
+            return response.data;
+
+        } catch(error) {
+            console.error("Error getting post request:", error);
+            setError("Failed to get post request");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+    const getPostById = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get('/posts/:postID');
+            setIsLoading(false);
+            return response.data;
+
+        } catch(error) {
+            console.error("Error getting post by Id request:", error);
+            setError("Failed to get post by Id request");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+    
+
+    const updatePost = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.patch('/posts');
+            setIsLoading(false);
+            return response.data;
+
+        } catch(error) {
+            console.error("Error updated post request:", error);
+            setError("Failed to update post request");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+    const deletePost = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.delete('/posts/:postID');
+            setIsLoading(false);
+            return response.data;
+
+        } catch(error) {
+            console.error("Error deleteing post request:", error);
+            setError("Failed to delete post request");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+    const getPostByAuthor = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get('/posts/author/username');
+            setIsLoading(false);
+            return response.data;
+
+        } catch(error) {
+            console.error("Error getting post by Id request:", error);
+            setError("Failed to get post by Id request");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+    const getPostByCategory = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get('/posts/category/:game');
+            setIsLoading(false);
+            return response.data;
+
+        } catch(error) {
+            console.error("Error getting post by Id request:", error);
+            setError("Failed to get post by Id request");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+
+
     const value = {
         userData,
         isLoading,
@@ -260,6 +375,13 @@ export const QueryProvider = ({ children }) => {
         viewPendingRequests,
         getFriendsList,
         deleteFriend,
+        getPost,
+        getPostById,
+        updatePost,
+        deletePost,
+        getPostByAuthor,
+        getPostByCategory,
+        setFriendListData,
         
 
     };
