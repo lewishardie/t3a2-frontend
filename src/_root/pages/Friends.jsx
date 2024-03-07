@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '../../context/QueryContext';
 import { IoPersonAdd } from "react-icons/io5";
 import { SearchBar, UserCard } from '../../components/shared';
@@ -11,10 +11,10 @@ import { FcCancel, FcCheckmark } from "react-icons/fc";
 const Friends = () => {
 
   const { userListData, createFriendRequest, confirmFriendRequest, rejectFriendRequest, viewReceivedRequests, viewPendingRequests, getFriendsList, deleteFriend } = useQuery();
-  const [requestedFriends, setRequestedFriends] = useState([]);
-  const [receivedFriends, setReceivedFriends] = useState([]);
-  const [ friendList, setFriendList ] = useState([])
 
+  const [ requestedFriends, setRequestedFriends ] = useState([]);
+  const [ receivedFriends, setReceivedFriends ] = useState([]);
+  const [ friendList, setFriendList ] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,10 +38,15 @@ const Friends = () => {
     try {
       await createFriendRequest(username)
 
+      // Update Pending Friends
+      const updatedPending = requestedFriends.filter(request => request.username !== username);
+      setRequestedFriends(updatedPending)
+
       // Update friend list
       const updatedFriendList = await getFriendsList();
       setFriendList(updatedFriendList.friends)
       console.log("Friend Request Sent")
+
 
     } catch (error) {
       console.eorr("Error deleted friend:", error)
@@ -59,6 +64,8 @@ const Friends = () => {
       // Update friend list
       const updatedFriendList = await getFriendsList();
       setFriendList(updatedFriendList.friends)
+      // Update Pending 
+
       console.log("Confirm Friend Request")
 
     } catch (error) {
@@ -74,6 +81,11 @@ const Friends = () => {
       const updatedRequests = receivedFriends.filter(request => request.username !== username);
       setReceivedFriends(updatedRequests)
       console.log("Reject Friend Request")
+
+      // Update pending friends
+      const updatedPending = requestedFriends.filter(request => request.username !== username);
+      setRequestedFriends(updatedPending)
+      console.log("Reject Pending Request")
 
     } catch (error) {
     console.error("Error rejecting friend request:", error);
@@ -103,7 +115,7 @@ const Friends = () => {
             <IoPersonAdd size={40} /> 
           </button>
           
-          <div className="grid grid-rows w-full lg:grid-cols-3">
+          <div className="grid grid-rows w-full lg:grid-cols-3 lg:flex ">
           {friendList && friendList.map((request, index) => (
             <div className="" key={index}>
                       <UserCard 

@@ -14,8 +14,6 @@ const SearchBar = ({ placeholder, data, onSend }) => {
 
     
     const handleSend = async (username) => {
-        console.log(username)
-        console.log(onSend)
         if (onSend) {
             onSend(username)
             console.log(username)

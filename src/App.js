@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import AuthLayout from './_auth/AuthLayout'
 import RootLayout from './_root/RootLayout'
-import { Chats, Explore, Friends, Home, Profile, Settings, CreatePost, Missing } from './_root/pages'
+import { Chats, Explore, Friends, Home, Profile, Settings, CreatePost, Missing, Game } from './_root/pages'
 import { Login } from './_auth/forms/Login'
 import { Register } from './_auth/forms/Register'
 import { ToastContainer } from 'react-toastify'
@@ -31,6 +31,7 @@ const App = () => {
           <Route path="/settings" element={<Settings />}/>
           <Route path={'/profile/:username'} element={<Profile />}/>
           <Route path="/create-post" element={<CreatePost />}/>
+          <Route path="/games/1" element={<Game />}/>
           {/* catch all */}
           <Route path="*" element={<Missing />}/>
         </Route>

@@ -121,6 +121,7 @@ export const QueryProvider = ({ children }) => {
             setIsLoading(true);
             const response = await apiRequest.get('/friends');
             setIsLoading(false);
+            console.log("friend list", response)
             return response.data;
         } catch(error) {
             console.error("Error getting user by username:", error);
@@ -243,17 +244,37 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
+    const getFriendsUsernames = async () => {
+        try {
+            if (!isAuthenticated) {
+                return [];
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get('/friends/');
+            setIsLoading(false);
+            return response.data.friends.map(friend => friend.username);
+        } catch(error) {
+            console.error("Error getting friends usernames:", error);
+            setError("Failed to get usernames from the friends list");
+            setIsLoading(false);
+            return [];
+        }
+    };
+
     //===== Post Routes ====//
 
 
 
-    const getPost = async () => {
+    const makePost = async (postData) => {
         try {
             if (!isAuthenticated) {
                 return;
             }
             setIsLoading(true);
-            const response = await apiRequest.get('/posts');
+            console.log("starting make post")
+            const response = await apiRequest.post('/posts', postData);
+            console.log("make post request", response)
+            
             setIsLoading(false);
             return response.data;
 
@@ -282,8 +303,6 @@ export const QueryProvider = ({ children }) => {
             return null;
         }
     };
-
-    
 
     const updatePost = async () => {
         try {
@@ -321,21 +340,22 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
-    const getPostByAuthor = async () => {
+    const getPostByAuthor = async (username) => {
         try {
             if (!isAuthenticated) {
                 return;
             }
             setIsLoading(true);
-            const response = await apiRequest.get('/posts/author/username');
+            const response = await apiRequest.get(`/posts/author/${username}`);
             setIsLoading(false);
+            console.log("post author fetched", response)
             return response.data;
 
         } catch(error) {
             console.error("Error getting post by Id request:", error);
             setError("Failed to get post by Id request");
             setIsLoading(false);
-            return null;
+            return;
         }
     };
 
@@ -365,6 +385,7 @@ export const QueryProvider = ({ children }) => {
         error,
         userListData,
         friendListData,
+        setFriendListData,
         updateUserData,
         getUserByUsername,
         getUserById,
@@ -375,13 +396,13 @@ export const QueryProvider = ({ children }) => {
         viewPendingRequests,
         getFriendsList,
         deleteFriend,
-        getPost,
+        makePost,
         getPostById,
         updatePost,
         deletePost,
         getPostByAuthor,
         getPostByCategory,
-        setFriendListData,
+        getFriendsUsernames,
         
 
     };

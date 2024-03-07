@@ -1,31 +1,61 @@
 import React, { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom';
-import FileDropzone from '../shared/FileDropzone';
+// import FileDropzone from '../shared/FileDropzone';
+import { useQuery } from '../../context/QueryContext';
+import { useAuth } from '../../context/AuthContext';
 
 //Define Form
 export const PostForm = () => {
-  
+  const { isAuthenticated, } = useAuth();
+  const{ makePost, userData } = useQuery();
+  const navigate = useNavigate();
+
+  console.log(userData)
+
   const [postData, setPostData ] = useState({
     title: '',
-    content: '',
-    author: '',
+    textArea: '',
     image: '',
+    gameCategory: '',
+    author: userData?.username,
   });
-  const { navigate } = useNavigate()
+
+  // options for category selection
+  const options = [
+    { value: 'Final Fantasy', label: 'Final Fantasy' },
+    { value: 'World of Warcraft', label: 'World of Warcraft' },
+    { value: 'Last Epoch', label: 'Last Epoch' },
+  ];
+
 
   // handle on change for 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPostData({ ...postData, [name]: value });
-};
+  };
 
   // Define Submit Handler
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(postData)
-  }
+    try {
+      if (!isAuthenticated) {
+
+        console.log('User is not authenticated');
+        return;
+      }
+      // Call the makePost function
+      await makePost(postData);
+      console.log("makePost is: ", postData)
+      // redirect to home page
+      navigate('/'); 
+    } catch (error) {
+      // Error Handle
+      console.error("Error creating post:", error);
+    }
+
+  };
 
   return (
 
@@ -37,21 +67,26 @@ export const PostForm = () => {
         <div className="w-full px-3 mb-6">
           <label 
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
-            htmlFor="post-form">
+            htmlFor="gameCategory">
           </label>
+
           <div className="relative">
             <select 
               className="appearance-none block w-full bg-gray-100 text-black border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-purple-400 focus:bg-white" 
-              id="post-form"
-              >
-                <option defaultValue="" disabled>Choose a Game</option>
-                <option>World of Wacraft</option>
-                <option>Last Epoch</option>
+              id="gameCategory"
+              name="gameCategory"
+              onChange={handleChange} // Add onChange handler if needed
+              value={postData.gameCategory} // Set the value to state for controlled component
+            >
+              <option value="" disabled>Choose a Game</option>
+              {options.map((option, index) => (
+                <option key={index} value={option.value}>{option.label}</option>
+              ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+
         </div>
         
         {/* Title */}
@@ -76,19 +111,19 @@ export const PostForm = () => {
         {/* Content */}
         <div className="w-full px-3 mb-6">
           <label 
-            htmlFor="content" 
+            htmlFor="textArea" 
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
           >
           </label>
           <textarea 
             className="appearance-none block w-full bg-gray-100 text-black border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-purple-400 focus:bg-white" 
-            id="content" 
-            as='textarea'
+            id="textArea" 
+            as='textArea'
             type="text"
             rows="8"
             placeholder="Text (required)"
-            name="content"
-            value={postData.content}
+            name="textArea"
+            value={postData.textArea}
             onChange={handleChange}
             required
           />
@@ -101,12 +136,22 @@ export const PostForm = () => {
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
           >
           </label>
-          <FileDropzone
+          <input 
+            type="file"
+            name="image"
+            id="image"
+            value={postData.image}
+            onChange={handleChange}
+            accept=".jpg,.png,.jpeg,.svg"
+          
+          />
+          
+          {/* <FileDropzone
             onChange={handleChange}
             value={postData.image}
             mediaUrl="post?.imageUrl"
           
-          />
+          /> */}
         </div>
 
 
@@ -132,6 +177,8 @@ export const PostForm = () => {
 
     
   )
+
+  
 }
 
 

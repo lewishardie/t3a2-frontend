@@ -35,31 +35,6 @@ const TopNav = () => {
         </div>
 
         <div className="w-1/2">
-          {/* <div className="flex justify-between">
-            <Link to="/" className="bg-red rounded">
-              <p>game1</p>
-
-            </Link>
-            <Link to="/" className="bg-red rounded">
-              <p>game2</p>
-            </Link>
-            <Link to="/" className="bg-red rounded">
-              <p>game3</p>
-
-            </Link>
-            <Link to="/" className="bg-red rounded">
-              <p>game3</p>
-
-            </Link>
-            <Link to="/" className="bg-red rounded">
-              <p>game3</p>
-
-            </Link>
-            <Link to="/" className="bg-red rounded">
-              <p>game3</p>
-
-            </Link>
-          </div> */}
 
         </div>
 
