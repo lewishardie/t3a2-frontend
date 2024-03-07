@@ -1,38 +1,98 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '../../context/QueryContext';
 import { IoPersonAdd } from "react-icons/io5";
 import { SearchBar, UserCard } from '../../components/shared';
 import { FcCancel, FcCheckmark } from "react-icons/fc";
 // import { useEffect } from 'react';
 // import { useState } from 'react';
-import UsernameConverter from '../../components/hooks/UsernameConverter';
 
 
-import { useState } from 'react';
 
 const Friends = () => {
 
-  const { userListData, friendListData, userData, confirmFriendRequest, rejectFriendRequest, updateUserData } = useQuery();
-  const [ loading, setLoading ] = useState(false);
+  const { userListData, createFriendRequest, confirmFriendRequest, rejectFriendRequest, viewReceivedRequests, viewPendingRequests, getFriendsList, deleteFriend } = useQuery();
+  const [requestedFriends, setRequestedFriends] = useState([]);
+  const [receivedFriends, setReceivedFriends] = useState([]);
+  const [ friendList, setFriendList ] = useState([])
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const requested = await viewPendingRequests();
+        const received = await viewReceivedRequests();
+        const friends = await getFriendsList();
+        setRequestedFriends(requested.requestedFriends);
+        setReceivedFriends(received.receivedFriends);
+        setFriendList(friends.friends)
+      } catch (error) {
+        console.error("Error fetching pending requests:", error);
+      }
+    };
+
+    fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSendFriendRequest = async (username) => {
+    try {
+      await createFriendRequest(username)
+
+      // Update friend list
+      const updatedFriendList = await getFriendsList();
+      setFriendList(updatedFriendList.friends)
+      console.log("Friend Request Sent")
+
+    } catch (error) {
+      console.eorr("Error deleted friend:", error)
+    }
+};
 
   const handleAcceptRequest = async (username) => {
-    await confirmFriendRequest(username); // Call confirmFriendRequest function on accepting request
-    setLoading(true)
-    await updateUserData()
-    console.log("Confirm Friend Request")
+    try {
+      await confirmFriendRequest(username);
 
+      // Update received friends
+      const updatedRequests = receivedFriends.filter(request => request.username !== username);
+      setReceivedFriends(updatedRequests)
+
+      // Update friend list
+      const updatedFriendList = await getFriendsList();
+      setFriendList(updatedFriendList.friends)
+      console.log("Confirm Friend Request")
+
+    } catch (error) {
+      console.error("Error accepting friend request:", error);
+    }
   };
 
   const handleCancelRequest = async (username) => {
-    await rejectFriendRequest(username); // Call confirmFriendRequest function on accepting request
-    console.log("Reject Friend Request")
+    try {
+      await rejectFriendRequest(username); 
+      
+      // Update received friends
+      const updatedRequests = receivedFriends.filter(request => request.username !== username);
+      setReceivedFriends(updatedRequests)
+      console.log("Reject Friend Request")
 
-    if (loading) {
-      return <div>Loading...</div>
+    } catch (error) {
+    console.error("Error rejecting friend request:", error);
     }
-
   };
+
+  const handleDeleteFriend = async (username) => {
+    try {
+      await deleteFriend(username)
+
+      // Update friend list
+      const updatedFriendList = await getFriendsList();
+      setFriendList(updatedFriendList.friends)
+      console.log("Friend Deleted")
+
+    } catch (error) {
+      console.eorr("Error deleted friend:", error)
+    }
+  }
 
   return (
     <div className="flex flex-1">
@@ -42,22 +102,28 @@ const Friends = () => {
           <button>              
             <IoPersonAdd size={40} /> 
           </button>
-          <div>
-            <SearchBar placeholder="Search Users" data={userListData} />
-          </div>
           
-          <div className="w-full">
-            <div>
-              {friendListData && friendListData.friends && (
-                <div className="grid grid-cols-3 w-full">
-                  {friendListData.friends.map((friend, index) => (
-                    <UserCard key={index} data={friend}/>
-                      // {friend?.username}
+          <div className="grid grid-rows w-full lg:grid-cols-3">
+          {friendList && friendList.map((request, index) => (
+            <div className="" key={index}>
+                      <UserCard 
+                        key={index} 
+                        data={request} 
+                        onDelete={handleDeleteFriend} 
+                        onAdd={handleSendFriendRequest} 
+                        isFriend={friendList.some(friend => friend.username === request.username)}
+                        />
+                    </div>
                   ))}
-                </div>
-              )}
-            </div>
+          </div>
 
+          <div>
+            <SearchBar 
+              placeholder="Search Users" 
+              data={userListData}
+              onSend={handleSendFriendRequest}
+
+              />
           </div>
           
           <div className="home-container w-full">
@@ -70,56 +136,42 @@ const Friends = () => {
                     Received Requests
                   </h2>
                 </div>
-                <div className="flex w-full p-2 items-center flex-col ">
-                  {userData?.receivedFriends && userData?.receivedFriends.map((id, index) => (
-                  <UsernameConverter key={index} id={id}>
-                    {(username) => (
-                      <div className="flex flex-1 w-full items-center justify-between border-b-2 py-3" key={index}>
-                        <h3 className="flex m-0">
-                          {username} 
-                          </h3>
-                        <div className="flex flex-row gap-4">
-                          <button 
-                            onClick={() => handleAcceptRequest(username)}
-                            className="flex items-center justify-center border border-black rounded-full w-10 h-10"
-                            >
-                            <FcCheckmark size={30}/>
-                          </button>
-                          <button 
-                            onClick={() => handleCancelRequest(username)}
-                            className="flex items-center justify-center border border-black rounded-full w-10 h-10"
-                            >
-                            <FcCancel size={30}/>
-                          </button>
-                        </div>
+                  <div className="flex w-full p-2 items-center flex-col ">
+                  <div className="flex w-full p-2 items-center flex-col ">
+                  {receivedFriends.map((request, index) => (
+                    <div className="flex items-center w-full justify-between border-b-2 py-3" key={index}>
+                      <h3 className="m-0">{request.username}</h3>
+                      <div className="flex gap-4">
+                        <button 
+                          onClick={() => handleAcceptRequest(request.username)}
+                          className="flex items-center justify-center border border-black rounded-full w-10 h-10"
+                        >
+                          <FcCheckmark size={30} />
+                        </button>
+                        <button 
+                          onClick={() => handleCancelRequest(request.username)}
+                          className="flex items-center justify-center border border-black rounded-full w-10 h-10"
+                        >
+                          <FcCancel size={30} />
+                        </button>
                       </div>
-                    )}
-                  </UsernameConverter>
+                    </div>
                   ))}
                 </div>
               </div>
-
               <div className="flex flex-col">
                 <div className="border-b-2 border-black pb-2">
                   <h2 className="h3">
                     Pending Requests
                   </h2>
                 </div>
-
-                <div className="flex w-full p-2 items-center flex-col">
-                {userData?.requestedFriends && userData?.requestedFriends.map((id, index) => (
-                  <UsernameConverter key={index} id={id}>
-                    {(username) => (
-
-                      <div className="flex flex-1 w-full items-center justify-between border-b-2 py-2" key={index}>
-                        <h3 className="flex m-0 body-bold text-gray-500">
-                            {username} 
-                        </h3> 
-
-                      </div>
-                    )}
-                  </UsernameConverter>
-                ))}
+                <div className="flex w-full p-2 items-center flex-col ">
+                  {requestedFriends.map((request, index) => (
+                    <div className="flex items-center w-full justify-between border-b-2 py-3" key={index}>
+                      <h3 className="flex m-0 body-bold text-gray-500">{request.username}</h3>
+                    </div>
+                  ))}
+                </div>
                 </div>
               </div>
             </div>

@@ -3,10 +3,36 @@
 import { useAuth } from '../../context/AuthContext';
 import { useQuery } from '../../context/QueryContext'
 import { Loader } from '../../components/shared';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const Profile = () => {
     const { isAuthenticated } = useAuth()
-    const { userData, isLoading, error } = useQuery();
+    const { isLoading, error, getUserByUsername, userData } = useQuery();
+    const { username } = useParams()
+    const [ profileData, setProfileData ] = useState(null)
+    const [isOwnProfile, setIsOwnProfile] = useState(false);
+
+    useEffect(() => {
+        const fetchProfileData = async () => {
+            try {
+                const data = await getUserByUsername(username);
+                setProfileData(data);
+                setIsOwnProfile(userData?.username === data?.username)
+                console.log(userData)
+                console.log(data)
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+        fetchProfileData()
+
+
+    }, [username]);
+
+    const handleAddFriend = async () => {
+        return null
+    };
 
     if (!isAuthenticated) {
         return null;
@@ -36,19 +62,21 @@ const Profile = () => {
                 <div className="flex flex-col flex-1 justify-between md:mt-2">
                     <div className="flex flex-col w-full">
                         <h1 className="text-center xl:text-left h3-bold md:h1-semibold w-full">
-                            {userData?.name}
+                            {profileData?.name}
                         </h1>
                         <p className="small-regular md:body-medium text-light-3 text-center xl:text-left">
-                            {userData?.username}
+                            {profileData?.username}
                         </p>
                     </div>
 
                     <div className="flex gap-8 mt-10 items-center justify-center xl:justify-start flex-wrap z-20">
-                        
-                    </div>
+                            {!isOwnProfile && (
+                                <button onClick={handleAddFriend} className="btn btn-primary">Add friend</button>
+                            )}
+                        </div>
 
                     <p className="small-medium md:base-medium text-center xl:text-left mt-7 max-w-screen-sm">
-                        {userData?.about}
+                        {profileData?.about}
                     </p>
                 </div>
 
