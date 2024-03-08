@@ -17,7 +17,6 @@ export function useFriendPosts() {
         const friendsUsernames = await getFriendsUsernames();
         const friendPosts = await Promise.all(friendsUsernames.map(username => getPostByAuthor(username)));
         const currentUserPosts = await getPostByAuthor(username);
-        console.log("checking currentUserPosts", currentUserPosts)
         const allPosts = friendPosts.flat().concat(currentUserPosts);
 
         setUserPosts(allPosts);

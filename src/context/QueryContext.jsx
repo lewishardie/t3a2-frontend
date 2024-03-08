@@ -286,13 +286,13 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
-    const getPostById = async () => {
+    const getPostById = async (postId) => {
         try {
             if (!isAuthenticated) {
                 return;
             }
             setIsLoading(true);
-            const response = await apiRequest.get('/posts/:postID');
+            const response = await apiRequest.get(`/posts/${postId}`);
             setIsLoading(false);
             return response.data;
 
@@ -304,13 +304,14 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
-    const updatePost = async () => {
+    const updatePost = async (postId, editPost) => {
         try {
             if (!isAuthenticated) {
                 return;
             }
             setIsLoading(true);
-            const response = await apiRequest.patch('/posts');
+            const response = await apiRequest.patch(`/posts/${postId}`,editPost);
+            console.log("editing post:", editPost)
             setIsLoading(false);
             return response.data;
 
@@ -322,13 +323,13 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
-    const deletePost = async () => {
+    const deletePost = async (postId) => {
         try {
             if (!isAuthenticated) {
                 return;
             }
             setIsLoading(true);
-            const response = await apiRequest.delete('/posts/:postID');
+            const response = await apiRequest.delete(`/posts/${postId}`);
             setIsLoading(false);
             return response.data;
 

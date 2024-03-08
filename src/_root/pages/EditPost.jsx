@@ -1,47 +1,27 @@
-import { useState } from 'react';
-import { useQuery } from '../../context/QueryContext'; // Import the updatePost and deletePost functions
 
-const EditPost = ({ post, onClose }) => {
+import { useLocation } from 'react-router-dom';
+import UpdateForm from '../../components/forms/UpdateForm';
 
-
-    const {deletePost, updatePost} = useQuery()
-
-    const [editedPost, setEditedPost] = useState(post);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setEditedPost({ ...editedPost, [name]: value });
-    };
-
-    const handleUpdatePost = async () => {
-        try {
-        await updatePost(editedPost); // Call the updatePost function with the edited post data
-        onClose(); // Close the edit post modal or component after successful update
-        } catch (error) {
-        console.error("Error updating post:", error);
-        // Handle error
-        }
-    };
-
-    const handleDeletePost = async () => {
-        try {
-        await deletePost(post._id); // Call the deletePost function with the post ID
-        onClose(); // Close the edit post modal or component after successful deletion
-        } catch (error) {
-        console.error("Error deleting post:", error);
-        // Handle error
-        }
-    };
+const EditPost = () => {
+    const location = useLocation()
+    const { post } = location.state
 
     return (
-        <div>
-        <input type="text" name="title" value={editedPost.title} onChange={handleChange} />
-        <textarea name="textArea" value={editedPost.textArea} onChange={handleChange} />
-        {/* Other input fields for editing */}
-        <button onClick={handleUpdatePost}>Save</button>
-        <button onClick={handleDeletePost}>Delete</button>
+        <div className="flex flex-1">
+      <div className="common-container">
+        <div className="max-w-5x1 flex-start gap-3 justify-start w-full border-b-2 pb-2">
+          <img
+            src="../assets/icons/gamestart-logo.svg"
+            alt="add"
+            width={36}
+            height={36}
+          />
+          <h2 className="h3-bold md:h2-bold text-left w-full">Edit a post</h2>
         </div>
+            <UpdateForm post={post}/>
+      </div>
+    </div>
     );
-};
+    };
 
-export default EditPost
+export default EditPost;

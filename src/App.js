@@ -7,6 +7,7 @@ import { Register } from './_auth/forms/Register'
 import { ToastContainer } from 'react-toastify'
 
 import "./index.css";
+import EditPost from './_root/pages/EditPost'
 
 
 
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/settings" element={<Settings />}/>
           <Route path={'/profile/:username'} element={<Profile />}/>
           <Route path="/create-post" element={<CreatePost />}/>
+          <Route path="/edit-post/:postid" element={<EditPost />}/>
           <Route path="/games/1" element={<Game />}/>
           {/* catch all */}
           <Route path="*" element={<Missing />}/>

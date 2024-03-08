@@ -9,8 +9,6 @@ export default function Home() {
   const { userPosts, isLoading, error, } = useFriendPosts();
   const { userData } = useQuery()
 
-  console.log("user posts from useFriendPosts: ",userPosts)
-
   if (!isAuthenticated) {
     return null;
   }

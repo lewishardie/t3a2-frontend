@@ -7,6 +7,7 @@ import CreatePost from './CreatePost'
 import Profile from './Profile'
 import Missing from './Missing'
 import Game from './Game'
+import EditPost from './EditPost'
 
 export {
     Home,
@@ -17,5 +18,6 @@ export {
     CreatePost,
     Profile,
     Missing,
-    Game
+    Game,
+    EditPost
 }

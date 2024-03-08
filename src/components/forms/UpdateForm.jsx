@@ -1,58 +1,45 @@
-import React, { useState } from 'react'
-
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import FileDropzone from '../shared/FileDropzone';
 import { useQuery } from '../../context/QueryContext';
-import { useAuth } from '../../context/AuthContext';
-import { gameCategories } from '../constants/GameCategory'
+import { gameCategories } from '../constants/GameCategory';
 
-//Define Form
-export const PostForm = () => {
-  const { isAuthenticated, } = useAuth();
-  const{ makePost, userData } = useQuery();
+const UpdateForm = ({ post }) => {
+  const { updatePost } = useQuery();
   const navigate = useNavigate();
 
-  console.log(userData)
-
-  const [postData, setPostData ] = useState({
-    title: '',
-    textArea: '',
-    image: '',
-    gameCategory: '',
-    author: userData.username,
+  const [updateData, setUpdateData] = useState({
+    title: post.title,
+    textArea: post.textArea,
+    image: post.image,
+    gameCategory: post.gameCategory,
   });
 
+  useEffect(() => {
+    setUpdateData({
+      title: post.title,
+      textArea: post.textArea,
+      image: post.image,
+      gameCategory: post.gameCategory,
+    });
+  }, [post]);
 
-  // handle on change for 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPostData({ ...postData, [name]: value });
+    setUpdateData({ ...updateData, [name]: value });
   };
 
-  // Define Submit Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      if (!isAuthenticated) {
-
-        console.log('User is not authenticated');
-        return;
-      }
-      // Call the makePost function
-      await makePost(postData);
-      console.log("makePost is: ", postData)
-      // redirect to home page
-      navigate('/'); 
+      await updatePost(post._id, updateData);
+      navigate('/');
     } catch (error) {
-      // Error Handle
-      console.error("Error creating post:", error);
+      console.error('Error updating post:', error);
     }
-
   };
 
   return (
-
     <form className="flex gap-9 w-full " onSubmit={handleSubmit}>
 
       <div className="flex w-full flex-col  bg-gray-200 border border-gray-200 rounded py-3 px-4 mb-3">
@@ -69,8 +56,8 @@ export const PostForm = () => {
               className="appearance-none block w-full bg-gray-100 text-black border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-purple-400 focus:bg-white" 
               id="gameCategory"
               name="gameCategory"
-              onChange={handleChange} // Add onChange handler if needed
-              value={postData.gameCategory} // Set the value to state for controlled component
+              onChange={handleChange} 
+              value={updateData.gameCategory} 
             >
               <option value="" disabled>Select a category</option>
               {gameCategories.map((category, index) => (
@@ -95,7 +82,7 @@ export const PostForm = () => {
             type="text" 
             placeholder="Title" 
             name="title"
-            value={postData.title}
+            value={updateData.title}
             onChange={handleChange}
             required
           >
@@ -117,7 +104,7 @@ export const PostForm = () => {
             rows="8"
             placeholder="Text (required)"
             name="textArea"
-            value={postData.textArea}
+            value={updateData.textArea}
             onChange={handleChange}
             required
           />
@@ -134,7 +121,7 @@ export const PostForm = () => {
             type="file"
             name="image"
             id="image"
-            value={postData.image}
+            value={updateData.image}
             onChange={handleChange}
             accept=".jpg,.png,.jpeg,.svg"
           
@@ -161,14 +148,13 @@ export const PostForm = () => {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             type="submit"
           >
-            Post
+            Save
           </button>
         </div>
 
       </div>
     </form>
-  )
-}
+  );
+};
 
-
-export default PostForm
+export default UpdateForm;
