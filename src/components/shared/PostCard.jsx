@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import { useQuery } from '../../context/QueryContext';
 import { BsThreeDots } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 
+
 const PostCard = ({ post }) => {
   const { deletePost } = useQuery()
-  // const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
+
   const [showMenu, setShowMenu] = useState(false)
   const navigate = useNavigate()
 
+
   const handleEdit = () => {
-    // setIsEditing(true);
     setShowMenu(false);
-    console.log("post data from post card", post)
     navigate(`/edit-post/${post._id}`, { state: { post }});
+    console.log("post data from post card", post)
     
   };
 
@@ -21,10 +22,13 @@ const PostCard = ({ post }) => {
     try {
       await deletePost(post._id);
       console.log("delete Post: ", post._id)
+      setShowMenu(false);
+
     } catch (error) {
       console.error("Error deleting post:", error);
     }
   };
+  
 
   return (
     <div className="relative bg-white p-4 m-2 shadow-md rounded-lg">

@@ -41,21 +41,12 @@ export const QueryProvider = ({ children }) => {
             }
         };
 
-        // const getFriendsList = async () => {
-        //     if (isAuthenticated) {
-        //         await fetchData('/friends', setFriendListData);
-        //     }
-        // };
-
         fetchUserData();
 
         getAllUsers();
 
-        // getFriendsList();
-
-
         return () => {
-            setError(null); // Reset error on unmount
+            setError(null);
         };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated]);
