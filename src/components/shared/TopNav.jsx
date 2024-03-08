@@ -9,12 +9,15 @@ import { Button } from 'react-bootstrap'
 import { IoNotificationsOutline } from "react-icons/io5";
 import { BiMessageSquareDots } from "react-icons/bi";
 import { LiaUserFriendsSolid } from "react-icons/lia";
+import { useQuery } from '../../context/QueryContext';
 
 
 const TopNav = () => {
   
+  const { userData } = useQuery();
   
-  const { logOutUser } = useAuth()
+  const { logOutUser } = useAuth();
+
   return (
       <section className="top-nav">
         <div className=" flex-between">
@@ -23,7 +26,7 @@ const TopNav = () => {
           <Link to="/" className="">
             <div className="w-[50px] md:w-[70px]">
             <img
-              src="/assets/icons/gamestart-logo.svg"
+              src={userData?.imageUrl || "../assets/icons/gamestart-logo.svg"}
               alt="logo"
               />
             </div>
@@ -73,7 +76,7 @@ const TopNav = () => {
               />
             </Button>
 
-            <Link to="/profile">
+            <Link to={`/profile/${userData?.username}`}>
               <div className="w-[40px] md:w-[60px]">
               <img
                 src="/assets/icons/gamestart-logo.svg"

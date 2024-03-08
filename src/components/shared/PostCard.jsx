@@ -1,6 +1,6 @@
 
 
-export const PostCard = ({ post }) => {
+const PostCard = ({ post }) => {
 
   return (
     <div className="bg-white p-4 m-2 shadow-md rounded-lg">
@@ -21,5 +21,4 @@ export const PostCard = ({ post }) => {
   );
 };
 
-
-export default PostCard;
+export default PostCard

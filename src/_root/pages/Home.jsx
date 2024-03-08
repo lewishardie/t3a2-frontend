@@ -1,13 +1,15 @@
 import { useAuth } from '../../context/AuthContext';
 import { Loader } from '../../components/shared';
 import { useFriendPosts } from '../../components/hooks/useFriendPosts';
-import { PostCard } from '../../components/shared/PostCard';
+import { PostCard } from '../../components/shared';
 import { useQuery } from '../../context/QueryContext';
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
   const { userPosts, isLoading, error, } = useFriendPosts();
   const { userData } = useQuery()
+
+  console.log("user posts from useFriendPosts: ",userPosts)
 
   if (!isAuthenticated) {
     return null;

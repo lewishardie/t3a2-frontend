@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 // import FileDropzone from '../shared/FileDropzone';
 import { useQuery } from '../../context/QueryContext';
 import { useAuth } from '../../context/AuthContext';
+import { gameCategories } from '../constants/GameCategory'
 
 //Define Form
 export const PostForm = () => {
@@ -18,15 +19,8 @@ export const PostForm = () => {
     textArea: '',
     image: '',
     gameCategory: '',
-    author: userData?.username,
+    author: userData.username,
   });
-
-  // options for category selection
-  const options = [
-    { value: 'Final Fantasy', label: 'Final Fantasy' },
-    { value: 'World of Warcraft', label: 'World of Warcraft' },
-    { value: 'Last Epoch', label: 'Last Epoch' },
-  ];
 
 
   // handle on change for 
@@ -78,9 +72,9 @@ export const PostForm = () => {
               onChange={handleChange} // Add onChange handler if needed
               value={postData.gameCategory} // Set the value to state for controlled component
             >
-              <option value="" disabled>Choose a Game</option>
-              {options.map((option, index) => (
-                <option key={index} value={option.value}>{option.label}</option>
+              <option value="" disabled>Select a category</option>
+              {gameCategories.map((category, index) => (
+                <option key={index} value={category}>{category}</option>
               ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
