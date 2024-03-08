@@ -3,10 +3,12 @@ import { useQuery } from '../../context/QueryContext';
 
 export function useFriendPosts() {
 
-  const { getFriendsUsernames, getPostByAuthor } = useQuery();
+  const { getFriendsUsernames, getPostByAuthor, userData } = useQuery();
   const [userPosts, setUserPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const username = userData?.username
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,7 +16,8 @@ export function useFriendPosts() {
         setIsLoading(true);
         const friendsUsernames = await getFriendsUsernames();
         const friendPosts = await Promise.all(friendsUsernames.map(username => getPostByAuthor(username)));
-        const allPosts = friendPosts.flat();
+        const currentUserPosts = await getPostByAuthor(username);
+        const allPosts = friendPosts.flat().concat(currentUserPosts);
 
         setUserPosts(allPosts);
         setIsLoading(false);
@@ -27,7 +30,7 @@ export function useFriendPosts() {
     };
 
       fetchData();
-  }, []);
+  }, [username]);
 
   return { userPosts, isLoading, error };
 }

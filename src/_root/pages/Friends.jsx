@@ -51,7 +51,7 @@ const Friends = () => {
     } catch (error) {
       console.eorr("Error deleted friend:", error)
     }
-};
+  };
 
   const handleAcceptRequest = async (username) => {
     try {

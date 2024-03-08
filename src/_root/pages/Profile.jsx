@@ -52,10 +52,7 @@ const Profile = () => {
         <div className="profile-inner_container">
             <div className="flex xl:flex-row flex-col max-xl:items-center flex-1 gap-7">
                 <img
-                    src="../assets/icons/gamestart-logo.svg"
-                    // src={
-                    //     userData?.imageUrl || "../assets/icons/gamestart-logo.svg"
-                    // }
+                    src={userData?.imageUrl || "../assets/icons/gamestart-logo.svg"}
                     alt="profile"
                     className="w-28 h-28 lg:h-36 lg:w-36 rounded-full"
                 />
@@ -73,7 +70,7 @@ const Profile = () => {
                             {!isOwnProfile && (
                                 <button onClick={handleAddFriend} className="btn btn-primary">Add friend</button>
                             )}
-                        </div>
+                    </div>
 
                     <p className="small-medium md:base-medium text-center xl:text-left mt-7 max-w-screen-sm">
                         {profileData?.about}
@@ -86,9 +83,27 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
+
+          
+            <div className="home-container w-full">
+                <h2 className="h1-semibold">User Posts</h2>
+                <div className="w-full flex flex-1 flex-col gap-5">
+                    <div className="flex flex-col">
+                        <div className="border-b-2 border-black pb-2">
+                            <h2 className="h3">
+                            Received Requests
+                            </h2>
+                        </div>
+                        <div className="flex w-full p-2 items-center flex-col ">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-  )
+    
+    )
 }
 
 export default Profile

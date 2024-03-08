@@ -1,7 +1,7 @@
 import { useAuth } from '../../context/AuthContext';
 import { Loader } from '../../components/shared';
 import { useFriendPosts } from '../../components/hooks/useFriendPosts';
-import { PostCard } from '../../components/shared/PostCard';
+import { PostCard } from '../../components/shared';
 import { useQuery } from '../../context/QueryContext';
 
 export default function Home() {
