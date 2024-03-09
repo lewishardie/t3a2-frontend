@@ -45,17 +45,17 @@ const Profile = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username, userPosts]);
 
-  useEffect(() => {
-    const checkFriendship = async () => {
-      try {
-        const friendsList = await getFriendsList();
-        setIsFriend(friendsList.friends.some((friend) => friend.username === username));
-      } catch (error) {
-        console.error("Error fetching friends list:", error);
-      }
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   const checkFriendship = async () => {
+  //     try {
+  //       const friendsList = await getFriendsList();
+  //       setIsFriend(friendsList.friends.some((friend) => friend.username === username));
+  //     } catch (error) {
+  //       console.error("Error fetching friends list:", error);
+  //     }
+  //   };
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
 
 
