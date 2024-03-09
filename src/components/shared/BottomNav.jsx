@@ -1,7 +1,6 @@
 import { NavLink} from 'react-router-dom'
 
 import { BiMessageSquareDots } from 'react-icons/bi'
-import { IoNotificationsOutline } from 'react-icons/io5'
 import { LiaUserFriendsSolid } from 'react-icons/lia'
 // import { IoHomeOutline } from "react-icons/io5";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -52,15 +51,6 @@ export default function BottomNav () {
                 >
                 <LiaUserFriendsSolid size={30}/>
 
-                </NavLink>
-            </li>
-
-            <li className="bottom-nav-link">
-                <NavLink 
-                to='/notifications'
-                className="flex gap-4 p-2"
-                >
-                <IoNotificationsOutline size={30}/>
                 </NavLink>
             </li>
 

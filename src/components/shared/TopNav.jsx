@@ -19,8 +19,10 @@ const TopNav = () => {
   const { logOutUser } = useAuth();
 
   return (
-      <section className="top-nav">
-        <div className=" flex-between">
+
+      <section className="top-nav flex-between">
+         
+
         <div className="flex items-center gap-5">
 
           <Link to="/" className="">
@@ -86,7 +88,7 @@ const TopNav = () => {
             </Link>
        
         </div>
-        </div>
+
       </section>
 
 

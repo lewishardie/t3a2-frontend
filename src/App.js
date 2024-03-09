@@ -30,10 +30,10 @@ const App = () => {
           <Route path="/chats" element={<Chats />}/>
           <Route path="/friends" element={<Friends />}/>
           <Route path="/settings" element={<Settings />}/>
-          <Route path={'/profile/:username'} element={<Profile />}/>
+          <Route path='/profile/:username' element={<Profile />}/>
           <Route path="/create-post" element={<CreatePost />}/>
           <Route path="/edit-post/:postid" element={<EditPost />}/>
-          <Route path="/games/1" element={<Game />}/>
+          <Route path="/games/:name" element={<Game />}/>
           {/* catch all */}
           <Route path="*" element={<Missing />}/>
         </Route>

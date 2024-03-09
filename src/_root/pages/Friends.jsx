@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from '../../context/QueryContext';
-import { IoPersonAdd } from "react-icons/io5";
 import { SearchBar, UserCard } from '../../components/shared';
 import { FcCancel, FcCheckmark } from "react-icons/fc";
-// import { useEffect } from 'react';
-// import { useState } from 'react';
-
+import { LiaUserFriendsSolid } from 'react-icons/lia'
 
 
 const Friends = () => {
 
-  const { userListData, createFriendRequest, confirmFriendRequest, rejectFriendRequest, viewReceivedRequests, viewPendingRequests, getFriendsList, deleteFriend } = useQuery();
+  const { userListData, confirmFriendRequest, rejectFriendRequest, viewReceivedRequests, viewPendingRequests, getFriendsList, deleteFriend } = useQuery();
 
   const [ requestedFriends, setRequestedFriends ] = useState([]);
   const [ receivedFriends, setReceivedFriends ] = useState([]);
@@ -34,40 +31,34 @@ const Friends = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSendFriendRequest = async (username) => {
+  const updateFriendLists = async () => {
     try {
-      await createFriendRequest(username)
-
-      // Update Pending Friends
-      const updatedPending = requestedFriends.filter(request => request.username !== username);
-      setRequestedFriends(updatedPending)
-
-      // Update friend list
-      const updatedFriendList = await getFriendsList();
-      setFriendList(updatedFriendList.friends)
-      console.log("Friend Request Sent")
-
-
+      const { friends } = await getFriendsList();
+      setFriendList(friends);
     } catch (error) {
-      console.eorr("Error deleted friend:", error)
+      console.error("Error updating friend lists:", error);
     }
   };
+
+  // const handleSendFriendRequest = async (username) => {
+  //   try {
+  //     await createFriendRequest(username);
+  //     const updatedPending = requestedFriends.filter(request => request.username !== username);
+  //     setRequestedFriends(updatedPending);
+
+  //     console.log("Friend request sent");
+  //   } catch (error) {
+  //     console.error("Error sending friend request:", error);
+  //   }
+  // };
 
   const handleAcceptRequest = async (username) => {
     try {
       await confirmFriendRequest(username);
-
-      // Update received friends
       const updatedRequests = receivedFriends.filter(request => request.username !== username);
-      setReceivedFriends(updatedRequests)
+      setReceivedFriends(updatedRequests);
 
-      // Update friend list
-      const updatedFriendList = await getFriendsList();
-      setFriendList(updatedFriendList.friends)
-      // Update Pending 
-
-      console.log("Confirm Friend Request")
-
+      console.log("Friend request accepted");
     } catch (error) {
       console.error("Error accepting friend request:", error);
     }
@@ -75,54 +66,45 @@ const Friends = () => {
 
   const handleCancelRequest = async (username) => {
     try {
-      await rejectFriendRequest(username); 
-      
-      // Update received friends
+      await rejectFriendRequest(username);
       const updatedRequests = receivedFriends.filter(request => request.username !== username);
-      setReceivedFriends(updatedRequests)
-      console.log("Reject Friend Request")
+      setReceivedFriends(updatedRequests);
 
-      // Update pending friends
       const updatedPending = requestedFriends.filter(request => request.username !== username);
-      setRequestedFriends(updatedPending)
-      console.log("Reject Pending Request")
-
+      setRequestedFriends(updatedPending);
+      console.log("Friend request rejected");
     } catch (error) {
-    console.error("Error rejecting friend request:", error);
+      console.error("Error rejecting friend request:", error);
     }
   };
 
   const handleDeleteFriend = async (username) => {
     try {
-      await deleteFriend(username)
-
-      // Update friend list
-      const updatedFriendList = await getFriendsList();
-      setFriendList(updatedFriendList.friends)
-      console.log("Friend Deleted")
-
+      await deleteFriend(username);
+      await updateFriendLists();
+      console.log("Friend deleted");
     } catch (error) {
-      console.eorr("Error deleted friend:", error)
+      console.error("Error deleting friend:", error);
     }
-  }
+  };
 
   return (
-    <div className="flex flex-1">
       <div className="home-container">
         <div className="home-posts">
-          <h2 className="h3-bold md:h1-bold text-left w-full">Friends </h2>
+          <div className="flex flex-row gap-4 items-center border-b-2 border-black pb-2">
           <button>              
-            <IoPersonAdd size={40} /> 
+            <LiaUserFriendsSolid size={35} /> 
           </button>
+          <h2 className="w-full h3-bold md:h1-bold text-left m-0">Friends </h2>
+          </div>
           
-          <div className="grid grid-rows w-full lg:grid-cols-3 lg:flex ">
+          <div className="user-grid ">
           {friendList && friendList.map((request, index) => (
-            <div className="" key={index}>
+            <div key={index}>
                       <UserCard 
                         key={index} 
                         data={request} 
                         onDelete={handleDeleteFriend} 
-                        onAdd={handleSendFriendRequest} 
                         isFriend={friendList.some(friend => friend.username === request.username)}
                         />
                     </div>
@@ -133,22 +115,24 @@ const Friends = () => {
             <SearchBar 
               placeholder="Search Users" 
               data={userListData}
-              onSend={handleSendFriendRequest}
+              friendList={friendList}
+              requestedFriends={requestedFriends}
+              updateFriendLists={updateFriendLists}
 
               />
           </div>
           
+
           <div className="home-container w-full">
-            <h2 className="h1-semibold">Friend Requests</h2>
+            <h2 className="h2-semibold">Friend Requests</h2>
             <div className="w-full flex flex-1 flex-col gap-5">
 
               <div className="flex flex-col">
                 <div className="border-b-2 border-black pb-2">
-                  <h2 className="h3">
+                  <h2 className="h4">
                     Received Requests
                   </h2>
                 </div>
-                  <div className="flex w-full p-2 items-center flex-col ">
                   <div className="flex w-full p-2 items-center flex-col ">
                   {receivedFriends.map((request, index) => (
                     <div className="flex items-center w-full justify-between border-b-2 py-3" key={index}>
@@ -170,10 +154,10 @@ const Friends = () => {
                     </div>
                   ))}
                 </div>
-              </div>
+
               <div className="flex flex-col">
                 <div className="border-b-2 border-black pb-2">
-                  <h2 className="h3">
+                  <h2 className="h4">
                     Pending Requests
                   </h2>
                 </div>
@@ -190,7 +174,7 @@ const Friends = () => {
           </div>
         </div>
       </div>
-    </div>
+  
   );
 };
 
