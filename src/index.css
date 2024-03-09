@@ -249,4 +249,18 @@
   .user-card {
     @apply flex items-center justify-between gap-4 border p-2;
   }
+
+  /* Chats */
+  #yourChat {
+    background-color: #7878a3;;
+    text-align: end;
+  }
+
+  #otherChat {
+    background-color: lavender;
+  }
+
+  .messageDetails {
+    font-size: xx-small;
+  }
 }
