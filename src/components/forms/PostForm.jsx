@@ -69,12 +69,13 @@ export const PostForm = () => {
               className="appearance-none block w-full bg-gray-100 text-black border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-purple-400 focus:bg-white" 
               id="gameCategory"
               name="gameCategory"
-              onChange={handleChange} // Add onChange handler if needed
-              value={postData.gameCategory} // Set the value to state for controlled component
+              onChange={handleChange} 
+              value={postData.gameCategory} 
+              required
             >
               <option value="" disabled>Select a category</option>
               {gameCategories.map((category, index) => (
-                <option key={index} value={category}>{category}</option>
+                <option key={index} value={category?.name}>{category.name}</option>
               ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -147,7 +148,6 @@ export const PostForm = () => {
           
           /> */}
         </div>
-
 
         <div className="flex justify-end gap-4">
           <button 

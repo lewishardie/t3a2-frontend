@@ -9,8 +9,6 @@ export default function Home() {
   const { userPosts, isLoading, error, } = useFriendPosts();
   const { userData } = useQuery()
 
-  console.log("user posts from useFriendPosts: ",userPosts)
-
   if (!isAuthenticated) {
     return null;
   }
@@ -24,6 +22,8 @@ export default function Home() {
   }
 
   return (
+    <div className="home-container">
+
     <div className="flex lg:w-2/3 min-w-[500px] w-full flex-col">
       <div className="bg-white">
         <nav className="flex flex-col sm:flex-row">
@@ -36,7 +36,7 @@ export default function Home() {
         </nav>
       </div>
 
-      <div className="home-container">
+
         <h2 className="h3-bold md:h2-bold text-left w-full">Home Feed, Hello {userData?.username}</h2>
         <div className="home-posts">
           <ul className="flex flex-col flex-1 gap-9 w-full">
@@ -47,7 +47,8 @@ export default function Home() {
             ))}
           </ul>
         </div>
-      </div>
+
     </div>
+  </div>
   );
 }

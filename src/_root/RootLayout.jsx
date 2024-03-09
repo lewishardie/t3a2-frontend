@@ -19,7 +19,7 @@ const RootLayout = () => {
             <>
               <div className="w-full md:flex flex-col">
                 <TopNav />
-                <div className="flex h-full">
+                <div className="flex flex-1">
                   <SideNav />
 
                 <section className="flex flex-1 h-full w-1/4">

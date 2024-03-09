@@ -74,8 +74,10 @@ export const QueryProvider = ({ children }) => {
                 return;
             }
             setIsLoading(true);
+            console.log("user Id:", username)
             const response = await apiRequest.get(`/users/username/${username}`);
             setIsLoading(false);
+            console.log("get user response:", response.data)
             return response.data;
         } catch(error) {
             console.error("Error getting user by username:", error);
@@ -85,15 +87,19 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
-    const updateUserData = async () => {
+    const updateUserData = async (userUpdate) => {
         try {
             if (!isAuthenticated) {
                 return;
             }
             setIsLoading(true);
-            const response = await apiRequest.patch('/users');            
+            const response = await apiRequest.patch('/users', userUpdate);            
             setIsLoading(false);
-            setUserData(response.data)
+            console.log("updated user: ", userUpdate)
+            
+            return response.data
+
+
         } catch(error) {
             console.error("Error updating user data:", error);
             setError("Failed to update user data");
@@ -112,7 +118,9 @@ export const QueryProvider = ({ children }) => {
             setIsLoading(true);
             const response = await apiRequest.get('/friends');
             setIsLoading(false);
+            
             console.log("friend list", response)
+
             return response.data;
         } catch(error) {
             console.error("Error getting user by username:", error);
@@ -132,6 +140,8 @@ export const QueryProvider = ({ children }) => {
             const response = await apiRequest.post(`/friends/add/${username}`);
             setIsLoading(false);
             console.log("Friend Request Sent")
+
+            console.log("update friend list data", response)
 
             return response.data
         } catch(error) {
@@ -169,7 +179,9 @@ export const QueryProvider = ({ children }) => {
             setIsLoading(true);
             const response = await apiRequest.get(`/friends/received`);
             setIsLoading(false);
+
             return response.data;
+
         } catch(error) {
             console.error("Error viewing received friend requests:", error);
             setError("Failed to view received friend requests");
@@ -185,7 +197,6 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.get(`/friends/requested`);
-
             setIsLoading(false);
 
             return response.data;
@@ -295,14 +306,14 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
-    const updatePost = async (postId, editPost) => {
+    const updatePost = async (postId, updatePost) => {
         try {
             if (!isAuthenticated) {
                 return;
             }
             setIsLoading(true);
-            const response = await apiRequest.patch(`/posts/${postId}`,editPost);
-            console.log("editing post:", editPost)
+            const response = await apiRequest.patch(`/posts/${postId}`, updatePost);
+            console.log("editing post:", updatePost)
             setIsLoading(false);
             return response.data;
 
@@ -321,6 +332,7 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.delete(`/posts/${postId}`);
+            
             setIsLoading(false);
             return response.data;
 
@@ -339,8 +351,8 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.get(`/posts/author/${username}`);
+
             setIsLoading(false);
-            console.log("post author fetched", response)
             return response.data;
 
         } catch(error) {
@@ -358,6 +370,7 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.get('/posts/category/:game');
+
             setIsLoading(false);
             return response.data;
 

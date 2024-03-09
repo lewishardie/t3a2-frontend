@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { IoAddCircleOutline, IoSearch } from "react-icons/io5";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { UserCard } from './index';
-// import { useQuery } from '../../context/QueryContext';
+import { useQuery } from '../../context/QueryContext';
 
-const SearchBar = ({ placeholder, data, onSend }) => {
+const SearchBar = ({ placeholder, data, friendList, requestedFriends, updateFriendsList }) => {
     const [searchWord, setSearchWord] = useState('');
+
+    const { createFriendRequest } = useQuery()
+
 
     const handleChange = (e) => {
         const searchResult = e.target.value;
@@ -13,12 +16,17 @@ const SearchBar = ({ placeholder, data, onSend }) => {
     };
 
     
-    const handleSend = async (username) => {
-        if (onSend) {
-            onSend(username)
-            console.log(username)
-          }
+    const handleSendRequest = async (username) => {
+        try {
+            // Call the API to send the friend request
+            await createFriendRequest(username);
+            console.log("Friend request sent");
+            // Optionally, update the UI or display a message indicating success
+        } catch (error) {
+            console.error("Error sending friend request:", error);
+            // Optionally, handle errors or display an error message
         }
+    };
 
     const clearInput = () => {
         setSearchWord('');
@@ -26,7 +34,12 @@ const SearchBar = ({ placeholder, data, onSend }) => {
 
     // Filter data based on searchWord
     const filteredData = data.filter((value) => {
-        return value.username && value.username.toLowerCase().includes(searchWord.toLowerCase());
+        return (
+            value.username &&
+            !friendList.some((friend) => friend.username === value.username) &&
+            !requestedFriends.some((request) => request.username === value.username) &&
+            value.username.toLowerCase().includes(searchWord.toLowerCase())
+        );
     });
 
     return (
@@ -57,7 +70,7 @@ const SearchBar = ({ placeholder, data, onSend }) => {
                             <UserCard data={value} />
                             <button
                                 className="pr-4"
-                                onClick={() => handleSend(value.username)}>
+                                onClick={() => handleSendRequest(value.username)}>
                                 <IoAddCircleOutline size={40} />
                             </button>
                         </div>

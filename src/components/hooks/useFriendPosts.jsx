@@ -8,6 +8,7 @@ export function useFriendPosts() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+
   const username = userData?.username
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export function useFriendPosts() {
         const allPosts = friendPosts.flat().concat(currentUserPosts);
 
         setUserPosts(allPosts);
+
         setIsLoading(false);
 
       } catch (error) {
@@ -34,4 +36,5 @@ export function useFriendPosts() {
   }, [username]);
 
   return { userPosts, isLoading, error };
+  
 }

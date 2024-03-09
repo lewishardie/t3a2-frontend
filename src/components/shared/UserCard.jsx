@@ -20,7 +20,7 @@ const UserCard = ({ data, onDelete, onAdd, isFriend }) => {
 
   return (
     
-    <div className="flex flex-row rounded-4 shadow-gray-300 shadow-md items-center  ">
+    <div className="flex flex-row rounded-4 shadow-gray-300 shadow-md items-center w-full  ">
 
       <Link to={`/profile/${username}`} className="flex w-full gap-4 p-2">
         <img
