@@ -250,6 +250,7 @@
     @apply flex items-center justify-between gap-4 border p-2;
   }
 
+
   .selected-avatar {
     width: 50px; /* Adjust the size as needed */
     height: auto;
@@ -266,5 +267,20 @@
     cursor: pointer;
   }
   
+}
+
+  /* Chats */
+  #yourChat {
+    background-color: #7878a3;;
+    text-align: end;
+  }
+
+  #otherChat {
+    background-color: lavender;
+  }
+
+  .messageDetails {
+    font-size: xx-small;
+  }
 }
 
