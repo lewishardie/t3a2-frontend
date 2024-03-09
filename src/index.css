@@ -266,8 +266,6 @@
     opacity: 0;
     cursor: pointer;
   }
-  
-}
 
   /* Chats */
   #yourChat {
@@ -282,5 +280,6 @@
   .messageDetails {
     font-size: xx-small;
   }
+
 }
 
