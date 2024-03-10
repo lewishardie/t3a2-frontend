@@ -46,7 +46,7 @@ const TopNav = () => {
             <Link to={`/profile/${userData?.username}`}>
               <div className="w-[40px] md:w-[60px]">
               <img
-                src={`${userData?.avatarImg}` || 'assets/avatars/user_3177440.png'} 
+                src={`${userData?.avatarImg}` || '/assets/avatars/user_3177440.png'} 
                 alt="logo"
                 />
               </div>
