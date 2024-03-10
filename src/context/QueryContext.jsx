@@ -74,10 +74,10 @@ export const QueryProvider = ({ children }) => {
                 return;
             }
             setIsLoading(true);
-            console.log("user Id:", username)
+          
             const response = await apiRequest.get(`/users/username/${username}`);
             setIsLoading(false);
-            console.log("get user response:", response.data)
+         
             return response.data;
         } catch(error) {
             console.error("Error getting user by username:", error);
@@ -95,7 +95,8 @@ export const QueryProvider = ({ children }) => {
             setIsLoading(true);
             const response = await apiRequest.patch('/users', userUpdate);            
             setIsLoading(false);
-            console.log("updated user: ", userUpdate)
+
+            setUserData()
             
             return response.data
 
@@ -103,6 +104,27 @@ export const QueryProvider = ({ children }) => {
         } catch(error) {
             console.error("Error updating user data:", error);
             setError("Failed to update user data");
+            setIsLoading(false);
+            return null;
+        }
+    };
+
+
+    const deleteUser = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.delete('/users');
+
+            setIsLoading(false);
+
+            return response.data;
+
+        } catch(error) {
+            console.error("Error rejecting friend request:", error);
+            setError("Failed to reject friend request");
             setIsLoading(false);
             return null;
         }
@@ -119,7 +141,6 @@ export const QueryProvider = ({ children }) => {
             const response = await apiRequest.get('/friends');
             setIsLoading(false);
             
-            console.log("friend list", response)
 
             return response.data;
         } catch(error) {
@@ -139,9 +160,7 @@ export const QueryProvider = ({ children }) => {
             setIsLoading(true);
             const response = await apiRequest.post(`/friends/add/${username}`);
             setIsLoading(false);
-            console.log("Friend Request Sent")
-
-            console.log("update friend list data", response)
+  
 
             return response.data
         } catch(error) {
@@ -159,7 +178,6 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.put(`/friends/accept/${username}`);
-            console.log("Friend Request Accepted")
 
             setIsLoading(false);
             return response.data;
@@ -216,7 +234,6 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.delete(`/friends/reject/${username}`);
-            console.log("Friend Request Rejected")
 
             setIsLoading(false);
             return response.data;
@@ -273,9 +290,8 @@ export const QueryProvider = ({ children }) => {
                 return;
             }
             setIsLoading(true);
-            console.log("starting make post")
+
             const response = await apiRequest.post('/posts', postData);
-            console.log("make post request", response)
             
             setIsLoading(false);
             return response.data;
@@ -313,7 +329,7 @@ export const QueryProvider = ({ children }) => {
             }
             setIsLoading(true);
             const response = await apiRequest.patch(`/posts/${postId}`, updatePost);
-            console.log("editing post:", updatePost)
+
             setIsLoading(false);
             return response.data;
 
@@ -363,13 +379,13 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
-    const getPostByCategory = async () => {
+    const getPostByCategory = async (gameCategory) => {
         try {
             if (!isAuthenticated) {
                 return;
             }
             setIsLoading(true);
-            const response = await apiRequest.get('/posts/category/:game');
+            const response = await apiRequest.get(`/posts/category/${gameCategory}`);
 
             setIsLoading(false);
             return response.data;
@@ -382,6 +398,65 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
+    //======== Follows
+
+    const followCategory = async (game) => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.post(`/users/follows/${game}`)
+    
+
+            setIsLoading(false);
+            return response.data;
+
+        } catch(error) {
+            console.error("Error getting post by Id request:", error);
+            setError("Failed to get post by Id request");
+            setIsLoading(false);
+            return null;
+        }
+    }
+
+    const unfollowCategory = async (game) => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.delete(`/users/follows/${game}`)
+         
+            setIsLoading(false);
+            return response.data;
+
+        } catch(error) {
+            console.error("Error getting post by Id request:", error);
+            setError("Failed to get post by Id request");
+            setIsLoading(false);
+            return null;
+        }
+    }
+
+    const viewFollows = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get(`/users/follows/list`)
+
+            const follows = response.data.follows.map(username => ({ username }));
+            return follows;
+
+        } catch(error) {
+            console.error("Error getting post by Id request:", error);
+            setError("Failed to get post by Id request");
+            setIsLoading(false);
+            return null;
+        }
+    }
 
 
     const value = {
@@ -408,7 +483,10 @@ export const QueryProvider = ({ children }) => {
         getPostByAuthor,
         getPostByCategory,
         getFriendsUsernames,
-        
+        followCategory,
+        unfollowCategory,
+        viewFollows,
+        deleteUser,
 
     };
 

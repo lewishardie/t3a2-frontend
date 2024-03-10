@@ -12,12 +12,9 @@ export const PostForm = () => {
   const{ makePost, userData } = useQuery();
   const navigate = useNavigate();
 
-  console.log(userData)
-
   const [postData, setPostData ] = useState({
     title: '',
     textArea: '',
-    image: '',
     gameCategory: '',
     author: userData.username,
   });
@@ -36,12 +33,10 @@ export const PostForm = () => {
     try {
       if (!isAuthenticated) {
 
-        console.log('User is not authenticated');
         return;
       }
       // Call the makePost function
       await makePost(postData);
-      console.log("makePost is: ", postData)
       // redirect to home page
       navigate('/'); 
     } catch (error) {
@@ -122,31 +117,6 @@ export const PostForm = () => {
             onChange={handleChange}
             required
           />
-        </div>
-
-        {/* Image */}
-        <div className="w-full px-3 mb-6">
-          <label 
-            htmlFor="image"
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-          >
-          </label>
-          <input 
-            type="file"
-            name="image"
-            id="image"
-            value={postData.image}
-            onChange={handleChange}
-            accept=".jpg,.png,.jpeg,.svg"
-          
-          />
-          
-          {/* <FileDropzone
-            onChange={handleChange}
-            value={postData.image}
-            mediaUrl="post?.imageUrl"
-          
-          /> */}
         </div>
 
         <div className="flex justify-end gap-4">

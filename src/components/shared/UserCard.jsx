@@ -24,7 +24,7 @@ const UserCard = ({ data, onDelete, onAdd, isFriend }) => {
 
       <Link to={`/profile/${username}`} className="flex w-full gap-4 p-2">
         <img
-          src={data?.imageUrl || "/assets/icons/gamestart-logo.svg"}
+          src={data?.avatarImg || 'assets/avatars/user_3177440.png'}
           alt="user"
           className="rounded-full w-14 h-14"
           />

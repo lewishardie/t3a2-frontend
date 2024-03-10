@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useQuery } from "../../context/QueryContext";
 import socketIO from "socket.io-client";
 import Chat from "../../components/Chat";
+import { BiMessageSquareDots } from 'react-icons/bi'
+
 const socket = socketIO.connect(process.env.REACT_APP_BACKEND_URL);
 
 const Chats = () => {
@@ -59,8 +61,17 @@ const Chats = () => {
   }, [otherUsername]);
 
   return (
-    <div>
-      <h1>Chats</h1>
+
+    <div className="home-container">
+
+      <div className="flex flex-row gap-4 items-center border-b-2 border-black pb-2">
+      <button>              
+        <BiMessageSquareDots size={35} /> 
+      </button>
+      <h2 className="w-full h3-bold md:h1-bold text-left m-0">Chats </h2>
+      </div>
+
+
       <div>
         {friendList ? (
           <div>
@@ -82,6 +93,7 @@ const Chats = () => {
           <p></p>
         )}
       </div>
+
       {showChat ? (
         <Chat
           socket={socket}

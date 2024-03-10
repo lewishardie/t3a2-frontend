@@ -40,25 +40,12 @@ const Friends = () => {
     }
   };
 
-  // const handleSendFriendRequest = async (username) => {
-  //   try {
-  //     await createFriendRequest(username);
-  //     const updatedPending = requestedFriends.filter(request => request.username !== username);
-  //     setRequestedFriends(updatedPending);
-
-  //     console.log("Friend request sent");
-  //   } catch (error) {
-  //     console.error("Error sending friend request:", error);
-  //   }
-  // };
-
   const handleAcceptRequest = async (username) => {
     try {
       await confirmFriendRequest(username);
       const updatedRequests = receivedFriends.filter(request => request.username !== username);
       setReceivedFriends(updatedRequests);
 
-      console.log("Friend request accepted");
     } catch (error) {
       console.error("Error accepting friend request:", error);
     }
@@ -72,7 +59,7 @@ const Friends = () => {
 
       const updatedPending = requestedFriends.filter(request => request.username !== username);
       setRequestedFriends(updatedPending);
-      console.log("Friend request rejected");
+
     } catch (error) {
       console.error("Error rejecting friend request:", error);
     }
@@ -82,7 +69,7 @@ const Friends = () => {
     try {
       await deleteFriend(username);
       await updateFriendLists();
-      console.log("Friend deleted");
+  
     } catch (error) {
       console.error("Error deleting friend:", error);
     }
@@ -95,7 +82,8 @@ const Friends = () => {
           <button>              
             <LiaUserFriendsSolid size={35} /> 
           </button>
-          <h2 className="w-full h3-bold md:h1-bold text-left m-0">Friends </h2>
+          <h2 className="w-full h3-bold md:h1-bold text-left m-0">Friends</h2>
+          <h3>({friendList.length})</h3>
           </div>
           
           <div className="user-grid ">

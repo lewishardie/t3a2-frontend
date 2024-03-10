@@ -18,7 +18,6 @@ const UpdateForm = ({ post }) => {
     setUpdateData({
       title: post.title,
       textArea: post.textArea,
-      image: post.image,
       gameCategory: post.gameCategory,
     });
   }, [post]);
@@ -108,31 +107,6 @@ const UpdateForm = ({ post }) => {
             onChange={handleChange}
             required
           />
-        </div>
-
-        {/* Image */}
-        <div className="w-full px-3 mb-6">
-          <label 
-            htmlFor="image"
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-          >
-          </label>
-          <input 
-            type="file"
-            name="image"
-            id="image"
-            value={updateData.image}
-            onChange={handleChange}
-            accept=".jpg,.png,.jpeg,.svg"
-          
-          />
-          
-          {/* <FileDropzone
-            onChange={handleChange}
-            value={postData.image}
-            mediaUrl="post?.imageUrl"
-          
-          /> */}
         </div>
 
 
