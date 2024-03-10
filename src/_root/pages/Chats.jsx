@@ -12,14 +12,21 @@ const Chats = () => {
   const [showChat, setShowChat] = useState(false);
   const [friendList, setFriendList] = useState([]);
 
-  const joinRoom = () => {
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+
+  const changeOtherUser = (newOtherUsername) => {
+    setOtherUsername(newOtherUsername);
+    setUsername(userData.username);
     setShowChat(false);
+    setMessage("");
+    setMessages([]);
     console.log("CLICKEDBUTTON");
     console.log("username: " + username);
-    console.log("otherUsername: " + otherUsername);
-    if (username !== "" && otherUsername !== "") {
+    console.log("otherUsername: " + newOtherUsername);
+    if (username !== "" && newOtherUsername !== "") {
       socket.emit("joinRoom", {
-        names: [username, otherUsername],
+        names: [username, newOtherUsername],
       });
       setShowChat(true);
     }
@@ -29,13 +36,13 @@ const Chats = () => {
     const fetchData = async () => {
       try {
         const friends = await getFriendsList();
+        // if (userData) {
+        //   ;
+        // }
         if (friends.friends.length > 0) {
           setFriendList(friends.friends);
-
           setOtherUsername(friends.friends[0].username);
-        }
-        if (userData) {
-          setUsername(userData.username);
+          //changeOtherUser(friends.friends[0].username, userData.username);
         }
       } catch (error) {
         console.error("Error fetching friends: ", error);
@@ -46,38 +53,47 @@ const Chats = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    changeOtherUser(otherUsername);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [otherUsername]);
+
   return (
     <div>
       <h1>Chats</h1>
-
+      <div>
+        {friendList ? (
+          <div>
+            <label htmlFor="friends">Choose a friend:</label>
+            <select
+              name="friends"
+              id="friends"
+              onChange={(e) => changeOtherUser(e.target.value)}
+            >
+              {friendList.map((friend, index) => (
+                <option value={friend.username} key={index}>
+                  {friend.username}
+                </option>
+              ))}
+            </select>
+            {/* <button onClick={joinRoom}>JOIN</button> */}
+          </div>
+        ) : (
+          <p></p>
+        )}
+      </div>
       {showChat ? (
         <Chat
           socket={socket}
           username={username}
           otherUsername={otherUsername}
+          message={message}
+          setMessage={setMessage}
+          messages={messages}
+          setMessages={setMessages}
         />
       ) : (
-        <div>
-          {friendList ? (
-            <div>
-              <label htmlFor="friends">Choose a friend:</label>
-              <select
-                name="friends"
-                id="friends"
-                onChange={(e) => setOtherUsername(e.target.value)}
-              >
-                {friendList.map((friend, index) => (
-                  <option value={friend.username} key={index}>
-                    {friend.username}
-                  </option>
-                ))}
-              </select>
-              <button onClick={joinRoom}>JOIN</button>
-            </div>
-          ) : (
-            <p></p>
-          )}
-        </div>
+        <br></br>
       )}
     </div>
   );
