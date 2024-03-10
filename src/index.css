@@ -266,8 +266,7 @@
     opacity: 0;
     cursor: pointer;
   }
-  
-  
+
   /* Chats */
   #yourChat {
     background-color: #7878a3;;
@@ -281,5 +280,5 @@
   .messageDetails {
     font-size: xx-small;
   }
-  
+
 }
