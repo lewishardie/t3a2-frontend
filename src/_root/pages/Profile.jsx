@@ -115,7 +115,7 @@ const Profile = () => {
       <div className="profile-inner-container">
         <div className="flex flex-col md:flex-row items-center justify-center md:justify-start md:gap-10 py-8 px-4 md:px-0">
           <img
-            src={profileData?.avatarImg || 'assets/avatars/user_3177440.png'}
+            src={profileData?.avatarImg || '/assets/avatars/user_3177440.png'}
             alt="profile"
             className="w-28 h-28 md:h-36 md:w-36 rounded-full mb-4 md:mb-0"
           />
