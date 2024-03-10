@@ -95,7 +95,8 @@ const Friends = () => {
           <button>              
             <LiaUserFriendsSolid size={35} /> 
           </button>
-          <h2 className="w-full h3-bold md:h1-bold text-left m-0">Friends </h2>
+          <h2 className="w-full h3-bold md:h1-bold text-left m-0">Friends</h2>
+          <h3>({friendList.length})</h3>
           </div>
           
           <div className="user-grid ">

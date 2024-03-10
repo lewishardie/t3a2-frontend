@@ -2,7 +2,9 @@
 export const gameCategories = [
   
   {
-    name: 'World of Warcraft', logo: '/assets/games/wow-icon.svg'
+    name: 'World of Warcraft', 
+    logo: '/assets/games/wow-icon.svg',
+    banner: '/assets/games/wow-banner.jpg'
   },
   {
     name: 'Counter Strike', logo: '/assets/games/counter-strike.svg'

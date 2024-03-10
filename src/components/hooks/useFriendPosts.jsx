@@ -3,7 +3,7 @@ import { useQuery } from '../../context/QueryContext';
 
 export function useFriendPosts() {
 
-  const { getFriendsUsernames, getPostByAuthor, userData } = useQuery();
+  const { getFriendsUsernames, getPostByAuthor, userData, viewFollows } = useQuery();
   const [userPosts, setUserPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);

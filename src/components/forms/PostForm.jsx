@@ -17,7 +17,6 @@ export const PostForm = () => {
   const [postData, setPostData ] = useState({
     title: '',
     textArea: '',
-    image: '',
     gameCategory: '',
     author: userData.username,
   });
@@ -122,31 +121,6 @@ export const PostForm = () => {
             onChange={handleChange}
             required
           />
-        </div>
-
-        {/* Image */}
-        <div className="w-full px-3 mb-6">
-          <label 
-            htmlFor="image"
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-          >
-          </label>
-          <input 
-            type="file"
-            name="image"
-            id="image"
-            value={postData.image}
-            onChange={handleChange}
-            accept=".jpg,.png,.jpeg,.svg"
-          
-          />
-          
-          {/* <FileDropzone
-            onChange={handleChange}
-            value={postData.image}
-            mediaUrl="post?.imageUrl"
-          
-          /> */}
         </div>
 
         <div className="flex justify-end gap-4">

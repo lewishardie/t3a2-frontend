@@ -12,16 +12,19 @@ const Settings = () => {
 
   const [userUpdate, setUserUpdate] = useState(() => ({
     name: userData?.name || '',
-    email: userData?.email || '',
+    // email: userData?.email || '',
     password: '',
     about: userData?.about || '',
-    avatar: userData?.avatar || '',
+    avatarImg: userData?.avatarImg || '',
   }));
 
-  const handleAvatarSelect = (avatarUrl) => {
-    setSelectedAvatar(avatarUrl);
-    setUserUpdate({ ...userUpdate, avatar: avatarUrl });
-  };
+const handleAvatarSelect = (avatarUrl) => {
+  setSelectedAvatar(avatarUrl);
+  setUserUpdate(prevState => ({
+    ...prevState,
+    avatarImg: avatarUrl
+  }));
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,9 +42,10 @@ const Settings = () => {
     } finally {
       setUserUpdate({
         name: "",
-        email: "",
+        // email: "",
         password: "",
-        username: "",
+        // username: "",
+        avatarImg: "",
         about: "",
       });
     }

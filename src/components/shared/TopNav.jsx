@@ -3,8 +3,6 @@ import { Link, NavLink } from 'react-router-dom'
 import { FiLogOut } from "react-icons/fi";
 import { useAuth } from '../../context/AuthContext';
 
-import { Button } from 'react-bootstrap'
-
 // Icon Imports
 import { IoNotificationsOutline } from "react-icons/io5";
 import { BiMessageSquareDots } from "react-icons/bi";
@@ -44,49 +42,41 @@ const TopNav = () => {
         </div>
 
         <div className="w-1/4 flex justify-end gap-2 items-center">
-            <NavLink 
+            {/* <NavLink 
               to="/friends" 
               className="btn"
               style={({isActive}) => isActive ? {color:"white"} : undefined }
               >
               <LiaUserFriendsSolid size={25}/>
             </NavLink>
-          
-            {/* Need to change link to open the side menu with notifcations panel*/}
-            <NavLink 
-              to="/notifications" 
-              className="btn"
-              style={({isActive}) => isActive ? {color:"white"} : undefined }
-              >
-              <IoNotificationsOutline size={25}/>
-            </NavLink>
+
             <NavLink 
               to="/chats"
               className="btn"
               style={({isActive}) => isActive ? {color:"white"} : undefined }
               >
               <BiMessageSquareDots size={25}/>
-            </NavLink>
+            </NavLink> */}
 
-            <Button 
-              variant="" 
-              className=""
-              onClick={logOutUser}
-              >
-              <FiLogOut 
-                //logout button
-              />
-            </Button>
 
             <Link to={`/profile/${userData?.username}`}>
               <div className="w-[40px] md:w-[60px]">
               <img
-                src="/assets/icons/gamestart-logo.svg"
+                src={`${userData?.avatarImg}`}
                 alt="logo"
                 />
               </div>
             </Link>
        
+            <button 
+              className="hover:bg-red hover:text-white rounded-full p-2"
+              onClick={logOutUser}
+              >
+              <FiLogOut 
+                size={30}
+                
+              />
+            </button>
         </div>
 
       </section>

@@ -96,6 +96,8 @@ export const QueryProvider = ({ children }) => {
             const response = await apiRequest.patch('/users', userUpdate);            
             setIsLoading(false);
             console.log("updated user: ", userUpdate)
+
+            setUserData()
             
             return response.data
 
@@ -363,13 +365,13 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
-    const getPostByCategory = async () => {
+    const getPostByCategory = async (gameCategory) => {
         try {
             if (!isAuthenticated) {
                 return;
             }
             setIsLoading(true);
-            const response = await apiRequest.get('/posts/category/:game');
+            const response = await apiRequest.get(`/posts/category/${gameCategory}`);
 
             setIsLoading(false);
             return response.data;
@@ -382,6 +384,66 @@ export const QueryProvider = ({ children }) => {
         }
     };
 
+    //======== Follows
+
+    const followCategory = async (game) => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.post(`/users/follows/${game}`)
+            console.log("follow a game: ", response)
+
+            setIsLoading(false);
+            return response.data;
+
+        } catch(error) {
+            console.error("Error getting post by Id request:", error);
+            setError("Failed to get post by Id request");
+            setIsLoading(false);
+            return null;
+        }
+    }
+
+    const unfollowCategory = async (game) => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.delete(`/users/follows/${game}`)
+            console.log("remove follow: ", response)
+
+            setIsLoading(false);
+            return response.data;
+
+        } catch(error) {
+            console.error("Error getting post by Id request:", error);
+            setError("Failed to get post by Id request");
+            setIsLoading(false);
+            return null;
+        }
+    }
+
+    const viewFollows = async () => {
+        try {
+            if (!isAuthenticated) {
+                return;
+            }
+            setIsLoading(true);
+            const response = await apiRequest.get(`/users/follows/list`)
+
+            const follows = response.data.follows.map(username => ({ username }));
+            return follows;
+
+        } catch(error) {
+            console.error("Error getting post by Id request:", error);
+            setError("Failed to get post by Id request");
+            setIsLoading(false);
+            return null;
+        }
+    }
 
 
     const value = {
@@ -408,6 +470,9 @@ export const QueryProvider = ({ children }) => {
         getPostByAuthor,
         getPostByCategory,
         getFriendsUsernames,
+        followCategory,
+        unfollowCategory,
+        viewFollows,
         
 
     };
