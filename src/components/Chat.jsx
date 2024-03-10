@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 
-function Chat({ socket, username, otherUsername }) {
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
-
+function Chat({
+  socket,
+  username,
+  otherUsername,
+  message,
+  setMessage,
+  messages,
+  setMessages,
+}) {
   const sendMessage = async () => {
     if (message !== "") {
       const messageData = {
@@ -33,6 +38,7 @@ function Chat({ socket, username, otherUsername }) {
     return () => {
       socket.off("receiveMessage", messageEvent);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
   return (
