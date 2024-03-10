@@ -49,7 +49,7 @@ export const Login = () => {
                 handleError('error')
             }
         } catch (error) {
-            console.log('Login Error:', error)
+
             handleError('Login failed. Please try again.');
 
         } finally {

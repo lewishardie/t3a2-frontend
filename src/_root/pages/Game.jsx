@@ -27,6 +27,7 @@ const Game = () => {
       };
       fetchPosts();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
 
   useEffect(() => {
@@ -93,7 +94,7 @@ const Game = () => {
           <h2 className="text-xl font-semibold mb-4">Game Posts</h2>
           <div className="grid-container gap-4">
             {/* Render game posts */}
-            
+
             {gamePosts.map(post => (
               <div key={post._id} className="post-card p-2 rounded-md">
                 <PostCard post={post} />

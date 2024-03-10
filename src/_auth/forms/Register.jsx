@@ -50,7 +50,7 @@ export const Register = () => {
         e.preventDefault();
         try {
             const newUser = await register(registerData.name, registerData.username, registerData.email, registerData.password);
-            console.log(newUser)
+  
 
             if (newUser) {
                 handleSuccess('success');
@@ -58,7 +58,7 @@ export const Register = () => {
                 handleError('error')
             }
         } catch (error) {
-            console.log(error)
+
             handleError('Registration failed. Please try again.');
 
         } finally {

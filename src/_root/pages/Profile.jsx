@@ -16,6 +16,7 @@ const Profile = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isFriend, setIsFriend] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [follows, setFollows] = useState([]);
 
   useEffect(() => {
@@ -45,6 +46,7 @@ const Profile = () => {
   }, [currentUsername, userPosts]);
 
   useEffect(() => {
+    // eslint-disable-next-line no-unused-vars
     const checkFriendship = async () => {
       try {
         const friendsList = await getFriendsList();
@@ -75,7 +77,6 @@ const Profile = () => {
   const handleAddFriend = async (username) => {
     try {
       await createFriendRequest(username);
-      console.log("Friend request sent:", username);
     } catch {
       console.error("Error sending friend request:", error);
     }
@@ -84,12 +85,13 @@ const Profile = () => {
   const handleRemoveFriend = async () => {
     try {
       await deleteFriend(currentUsername);
-      console.log("Friend removed:", currentUsername);
+
     } catch (error) {
       console.error("Error removing friend:", error);
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleGoToFriendProfile = (friendUsername) => {
     navigate.push(`/profile/${friendUsername}`);
   };
@@ -105,14 +107,15 @@ const Profile = () => {
   if (error) {
     return <div>Error: {error.message}</div>; // Render error message if there's an error
   }
-  console.log("profile data",profileData)
+
+  
 
   return (
     <div className="profile-container">
       <div className="profile-inner-container">
         <div className="flex flex-col md:flex-row items-center justify-center md:justify-start md:gap-10 py-8 px-4 md:px-0">
           <img
-            src={profileData?.avatarImg || "../assets/icons/gamestart-logo.svg"}
+            src={profileData?.avatarImg || 'assets/avatars/user_3177440.png'}
             alt="profile"
             className="w-28 h-28 md:h-36 md:w-36 rounded-full mb-4 md:mb-0"
           />

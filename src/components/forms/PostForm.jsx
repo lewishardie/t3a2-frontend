@@ -12,8 +12,6 @@ export const PostForm = () => {
   const{ makePost, userData } = useQuery();
   const navigate = useNavigate();
 
-  console.log(userData)
-
   const [postData, setPostData ] = useState({
     title: '',
     textArea: '',
@@ -35,12 +33,10 @@ export const PostForm = () => {
     try {
       if (!isAuthenticated) {
 
-        console.log('User is not authenticated');
         return;
       }
       // Call the makePost function
       await makePost(postData);
-      console.log("makePost is: ", postData)
       // redirect to home page
       navigate('/'); 
     } catch (error) {

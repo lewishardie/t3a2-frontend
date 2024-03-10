@@ -4,9 +4,13 @@ import { useQuery } from '../../context/QueryContext';
 import avatarOptions from '../../components/constants/AvatarConst';
 import AvatarImage from '../../components/shared/AvatarProfile';
 import { IoSettingsOutline } from "react-icons/io5";
+import { useAuth } from '../../context/AuthContext';
 
 const Settings = () => {
-  const { userData, updateUserData } = useQuery();
+  const { userData, updateUserData, deleteUser } = useQuery();
+
+    
+  const { logOutUser } = useAuth();
 
   const [selectedAvatar, setSelectedAvatar] = useState(avatarOptions[0].url);
 
@@ -45,9 +49,22 @@ const handleAvatarSelect = (avatarUrl) => {
         // email: "",
         password: "",
         // username: "",
-        avatarImg: "",
+        avatarmg: "",
         about: "",
       });
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      const deletedUser = await deleteUser();
+      if (deletedUser) {
+        showSuccessToast('User account deleted successfully.');
+        
+        await logOutUser()
+      }
+    } catch (error) {
+      console.error("Error deleting user account:", error);
     }
   };
 
@@ -67,16 +84,16 @@ const handleAvatarSelect = (avatarUrl) => {
   return (
     <div className="home-container">
         <div className="home-posts">
-          <div className="flex flex-row gap-4 items-center border-b-2 border-black pb-2">
+          <div className="flex flex-row gap-4 items-center w-full border-b-2 border-black pb-2">
           <button>              
             <IoSettingsOutline size={35} /> 
           </button>
 
-          <h2 className="w-full h3-bold md:h1-bold text-left m-0">Settings </h2>
+          <h2 className="h3-bold md:h1-bold text-left m-0">Settings </h2>
           </div>
 
 
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+          <form onSubmit={handleSubmit} className="flex flex-col w-full">
             <div className="mb-4">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
               <input
@@ -114,18 +131,21 @@ const handleAvatarSelect = (avatarUrl) => {
                 className="mt-1 p-2 block w-full rounded border border-gray-300"
               />
             </div>
-            <div className="mb-4">
-              <label htmlFor="avatar" className="block text-sm font-medium text-gray-700">Avatar</label>
+            <div className="mb-4 flex flex-col gap-4">
+              <div className="flex flex-row">
+
+              <label htmlFor="avatar" className="block text-sm font-medium text-gray-700">Avatar:</label>
               <AvatarImage 
                 avatarOptions={avatarOptions} 
                 onSelectAvatar={handleAvatarSelect} 
                 selectedAvatar={selectedAvatar} />
+                </div>
                 <img src={selectedAvatar} alt="Selected Avatar" className="selected-avatar" />
             </div>
-            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Save Changes</button>
+            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded w-1/3">Save Changes</button>
           </form>
-          <div className="flex justify-end">
-            <button type="submit" className="bg-dark text-white px-4 py-2 rounded">Delete Account</button>
+          <div className="flex mt-5">
+            <button type="submit" onClick={handleDeleteAccount} className="bg-dark text-white px-4 py-2 rounded">Delete Account</button>
           </div>
         </div>
       </div>

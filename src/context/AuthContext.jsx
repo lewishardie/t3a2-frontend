@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.post('/users/login', { username, password })
       const token = response.data
-      // console.log(response.data)
+ 
       localStorage.setItem('token', token);
       setIsAuthenticated(true)
       return response;
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.post('/users/register', { name, username, email, password});
       setUser(response.data.user);
-      console.log(response.data.user)
+
       return response;
     } catch (error) {
       console.log(error)

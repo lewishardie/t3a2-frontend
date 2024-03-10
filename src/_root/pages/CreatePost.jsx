@@ -3,8 +3,6 @@ import PostForm from '../../components/forms/PostForm'
 import { MdOutlineAddBox } from "react-icons/md";
 
 
-
-
 const CreatePost = () => {
 
   return (
